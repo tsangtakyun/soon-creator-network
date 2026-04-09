@@ -377,7 +377,7 @@ export default function ApplyPage() {
               <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#c7bdaf', marginBottom: '8px' }}>CREATOR PLANS</div>
               <div style={{ fontSize: '38px', lineHeight: 1.05, marginBottom: '10px' }}>揀你想用嘅 SOON Creator 計劃</div>
               <div style={{ fontSize: '17px', lineHeight: 1.7, color: '#e8ddcf', marginBottom: '18px', maxWidth: '760px' }}>
-                唔同 level 會影響你可用幾多 internal tools。最基本一定可以安全接 job；之後再按你想用幾多題材庫、script creation、storyboard、AI 生片去揀。
+                唔同 level 會影響你每月可用幾多 credits。最基本一定可以安全接 job；之後再按你想用幾多題材庫、script creation 同 storyboard 去揀。
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
                 {plans.map((plan) => {

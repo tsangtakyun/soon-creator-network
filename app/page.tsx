@@ -19,6 +19,9 @@ export default function HomePage() {
               <Link href="/apply" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#1a1a18', color: '#f5efe5', padding: '14px 18px', textDecoration: 'none', fontSize: '14px' }}>
                 立即登記
               </Link>
+              <Link href="/login?next=/creator-workspace" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#fff', color: '#1a1a18', padding: '14px 18px', textDecoration: 'none', fontSize: '14px', border: '1px solid rgba(26,26,24,0.12)' }}>
+                Google Login 入 Dashboard
+              </Link>
               <a href="#why-join" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#fff', color: '#1a1a18', padding: '14px 18px', textDecoration: 'none', fontSize: '14px', border: '1px solid rgba(26,26,24,0.12)' }}>
                 了解加入好處
               </a>
