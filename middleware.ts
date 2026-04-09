@@ -4,6 +4,10 @@ import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
+  const allowedEmails = (process.env.ALLOWED_EMAILS ?? '')
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
 
   const isPublicPage =
     request.nextUrl.pathname === '/' ||
@@ -34,6 +38,13 @@ export async function middleware(request: NextRequest) {
 
   if (!user && !isPublicPage) {
     return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  if (request.nextUrl.pathname.startsWith('/internal')) {
+    const email = user?.email?.toLowerCase() ?? ''
+    if (!email || (allowedEmails.length > 0 && !allowedEmails.includes(email))) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
 
   if (user && request.nextUrl.pathname === '/login') {

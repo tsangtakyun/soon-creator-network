@@ -29,6 +29,8 @@ create table if not exists public.creator_applications (
   analytics_drive_links text not null default '',
   ai_analysis jsonb not null default '{}'::jsonb,
   review_status text not null default 'new',
+  internal_notes text not null default '',
+  approved_at timestamptz,
   created_at timestamptz not null default now()
 );
 

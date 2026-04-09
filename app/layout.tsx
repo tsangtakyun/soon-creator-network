@@ -30,6 +30,12 @@ function NavBar() {
         <Link href="/apply" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
           Apply Now
         </Link>
+        <Link href="/internal/review" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
+          Internal Review
+        </Link>
+        <Link href="/internal/database" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
+          Approved Database
+        </Link>
         <Link href="/login" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
           Google Login
         </Link>
