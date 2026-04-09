@@ -137,18 +137,30 @@ export async function getCreatorCreditSummary(application: CreatorApplicationRec
       used: 0,
       remaining: 0,
       ledger: [] as CreatorUsageLedgerRecord[],
+      ledgerReady: true,
     }
   }
 
   const allowance = getCreatorMonthlyCredits(application.selected_plan, application.plan_payment_status)
-  const ledger = await listCreatorUsageLedger(application.id)
-  const used = ledger.reduce((sum, item) => sum + Number(item.credits_used || 0), 0)
+  try {
+    const ledger = await listCreatorUsageLedger(application.id)
+    const used = ledger.reduce((sum, item) => sum + Number(item.credits_used || 0), 0)
 
-  return {
-    allowance,
-    used,
-    remaining: Math.max(allowance - used, 0),
-    ledger,
+    return {
+      allowance,
+      used,
+      remaining: Math.max(allowance - used, 0),
+      ledger,
+      ledgerReady: true,
+    }
+  } catch {
+    return {
+      allowance,
+      used: 0,
+      remaining: allowance,
+      ledger: [] as CreatorUsageLedgerRecord[],
+      ledgerReady: false,
+    }
   }
 }
 

@@ -125,6 +125,11 @@ export default async function CreatorWorkspacePage() {
             <div style={{ color: '#5b5348', lineHeight: 1.7 }}>
               第一版 credit ledger 已開始記錄每次工具使用。之後再補 monthly refill、加購 credits 同更細 usage analytics。
             </div>
+            {!creditSummary.ledgerReady ? (
+              <div style={{ padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', color: '#7a7266', lineHeight: 1.7 }}>
+                credit ledger table 仲未起好，所以而家暫時先以 plan allowance 顯示。跑完 `creator_usage_ledger` SQL 後，就會開始真實記錄扣數。
+              </div>
+            ) : null}
           </section>
         ) : null}
       </div>
