@@ -24,7 +24,7 @@ export default function ThankYouClient({
 
     async function completePayment() {
       try {
-        setStatusMessage('正在確認你嘅 creator plan 付款...')
+        setStatusMessage('正在確認你的創作者方案付款...')
         const response = await fetch('/api/creator-plan/complete', {
           method: 'POST',
           headers: {
@@ -43,7 +43,7 @@ export default function ThankYouClient({
         }
 
         if (!cancelled) {
-          setStatusMessage(plan ? `已確認 ${plan} 付款，你嘅 creator onboarding 已正式啟動。` : '已確認付款。')
+          setStatusMessage(plan ? `已確認 ${plan} 付款，你的創作者流程已正式啟動。` : '已完成付款確認。')
         }
       } catch (error) {
         if (!cancelled) {
@@ -62,7 +62,17 @@ export default function ThankYouClient({
   if (!statusMessage) return null
 
   return (
-    <div style={{ margin: '0 0 18px', padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)', lineHeight: 1.7, color: '#5b5348' }}>
+    <div
+      style={{
+        margin: '0 0 18px',
+        padding: '14px 16px',
+        borderRadius: '16px',
+        background: 'rgba(36, 88, 255, 0.12)',
+        border: '1px solid rgba(142,180,255,0.18)',
+        lineHeight: 1.7,
+        color: '#e6eeff',
+      }}
+    >
       {statusMessage}
     </div>
   )
