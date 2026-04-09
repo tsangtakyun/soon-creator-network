@@ -16,18 +16,18 @@ function NavBar() {
         </Link>
 
         <div className="nav-links">
-          <a href="/#why-soon">Why SOON</a>
-          <a href="/#plans">Plans</a>
-          <Link href="/apply">Apply</Link>
-          <Link href="/creator-workspace">Workspace</Link>
+          <a href="/#why-soon">為何選擇 SOON</a>
+          <a href="/#plans">方案</a>
+          <Link href="/apply">申請加入</Link>
+          <Link href="/creator-workspace">工作台</Link>
         </div>
 
         <div className="nav-actions">
           <Link href="/creator-workspace" className="nav-secondary">
-            Go to Dashboard
+            前往工作台
           </Link>
           <Link href="/apply" className="nav-primary">
-            Join Network
+            立即加入
           </Link>
         </div>
       </nav>

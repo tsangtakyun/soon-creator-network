@@ -5,23 +5,23 @@ import Link from 'next/link'
 import { buildCreatorValueProps, getCreatorPlans } from '@/lib/creator-network'
 
 const creatorSteps = [
-  'Apply once and enter the SOON creator pool',
-  'Get matched to campaigns with clearer fit and rate context',
-  'Unlock idea, script, and storyboard workflows when you want to scale',
+  '提交一次申請，即可進入 SOON 創作者合作網絡。',
+  '根據合作方向、內容風格與報價區間，配對更合適的企劃機會。',
+  '當你需要擴大內容產能時，可再解鎖題材、腳本與分鏡工作流程。',
 ]
 
 const featureCards = [
   {
-    title: 'Paid-first workflow',
-    body: '所有合作先經 SOON system 跑。客戶先付款，creator 先正式入 production flow，減低拖數同溝通失控風險。',
+    title: '先付款，後製作',
+    body: '所有合作先經 SOON 系統流程處理。客戶完成付款後，創作者才正式進入製作階段，減少拖欠款項與溝通失控的風險。',
   },
   {
-    title: 'AI tools when needed',
-    body: '唔係逼你用工具，而係當你想加速搵題材、拆腳本、做 storyboard planning 時，SOON 先俾你即開即用。',
+    title: '按需要啟用 AI 工具',
+    body: 'SOON 不會強迫你使用工具；當你希望更快整理題材、規劃腳本或整理分鏡時，系統才會提供對應工作流程。',
   },
   {
-    title: 'Stay independent',
-    body: '你可以自由決定接唔接 campaign、揀唔揀 plan、用唔用系統。SOON 係幫你放大能力，唔係收走控制權。',
+    title: '保留創作自主',
+    body: '你可以自由決定是否接案、是否升級方案，以及是否使用系統工具。SOON 的角色是放大你的能力，而不是取走主導權。',
   },
 ]
 
@@ -37,7 +37,7 @@ export default function HomePage() {
             <div className="eyebrow">SOON CREATOR NETWORK</div>
             <div className="pill-badge">
               <span className="pill-badge__new">NEW</span>
-              <span>Creator jobs + AI workflow in one network</span>
+              <span>創作者合作機會與 AI 工作流程，整合於同一平台</span>
             </div>
 
             <h1>
@@ -46,30 +46,29 @@ export default function HomePage() {
             </h1>
 
             <p className="hero-text">
-              加入 SOON Creator Network，安全接 job、唔怕拖數，仲可以按你需要解鎖題材、script、
-              storyboard 呢套 AI workflow，將創作變成更穩定嘅成長系統。
+              加入 SOON Creator Network，讓合作流程更清晰、收款機制更穩定，並可按需要逐步啟用題材研究、腳本規劃與分鏡整理等 AI 工作流程，建立更可持續的創作系統。
             </p>
 
             <div className="hero-actions">
               <Link href="/apply" className="primary-cta">
-                立即加入 Network
+                立即加入
                 <span aria-hidden="true">→</span>
               </Link>
               <Link href="/creator-workspace" className="secondary-cta">
-                Go to Dashboard
+                前往工作台
               </Link>
             </div>
 
             <div className="hero-foot">
               <div className="hero-proof">
-                <span className="hero-proof__title">Built for creator safety</span>
+                <span className="hero-proof__title">為創作者而設的穩定合作流程</span>
                 <span className="hero-proof__text">
-                  Job flow、tool access、workspace update 都由同一個 SOON system 承接。
+                  合作流程、工具權限與工作台更新，皆由同一套 SOON 系統承接。
                 </span>
               </div>
               <div className="hero-proof hero-proof--compact">
-                <span className="hero-proof__title">Flexible plans</span>
-                <span className="hero-proof__text">由 free pool 到 heavy AI workflow，都可以按你節奏升級。</span>
+                <span className="hero-proof__title">可按需求升級的方案</span>
+                <span className="hero-proof__text">由基礎加入到進階 AI 工作流程，都可以按照你的節奏逐步啟用。</span>
               </div>
             </div>
           </section>
@@ -78,8 +77,8 @@ export default function HomePage() {
         <section className="section-grid">
           <div className="why-shell" id="why-soon">
             <div className="section-heading section-heading--center">
-              <div className="eyebrow">WHY SOON</div>
-              <h2>唔止係 creator database，而係一個可擴張嘅創作工作台。</h2>
+              <div className="eyebrow">為何選擇 SOON</div>
+              <h2>不只是創作者名單，而是一個可持續擴充的創作工作台。</h2>
             </div>
 
             <div className="panel-list">
@@ -95,8 +94,8 @@ export default function HomePage() {
 
         <section className="section-grid">
           <div className="section-heading">
-            <div className="eyebrow">HOW IT WORKS</div>
-            <h2>由接 job 到 content workflow，全部用一條清晰路徑連起。</h2>
+            <div className="eyebrow">運作方式</div>
+            <h2>從合作機會到內容工作流程，全部以清晰路徑串連。</h2>
           </div>
 
           <div className="steps-grid">
@@ -122,8 +121,8 @@ export default function HomePage() {
 
         <section className="plans-shell" id="plans">
           <div className="section-heading section-heading--wide">
-            <div className="eyebrow">CREATOR PLANS</div>
-            <h2>先入 network，再按你想唔想加速創作 workflow 去揀 plan。</h2>
+            <div className="eyebrow">創作者方案</div>
+            <h2>先加入網絡，再按你是否需要加速創作流程，選擇合適方案。</h2>
           </div>
 
           <div className="plans-grid">
@@ -134,7 +133,7 @@ export default function HomePage() {
                     <div className="plan-name">{plan.name}</div>
                     <div className="plan-subtitle">{plan.subtitle}</div>
                   </div>
-                  {plan.recommended ? <span className="plan-badge">Most Popular</span> : null}
+                  {plan.recommended ? <span className="plan-badge">推薦方案</span> : null}
                 </div>
 
                 <div className="plan-price">{plan.monthlyLabel}</div>
@@ -150,7 +149,7 @@ export default function HomePage() {
                 </div>
 
                 <Link href="/apply" className={plan.recommended ? 'plan-cta plan-cta--primary' : 'plan-cta'}>
-                  {plan.id === 'creator-core' ? '先免費加入' : '揀呢個 plan'}
+                  {plan.id === 'creator-core' ? '先免費加入' : '選擇此方案'}
                 </Link>
               </section>
             ))}
