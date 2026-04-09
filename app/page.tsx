@@ -25,6 +25,88 @@ const featureCards = [
   },
 ]
 
+const heroPrimaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '12px',
+  minWidth: '210px',
+  minHeight: '60px',
+  padding: '0 30px',
+  borderRadius: '999px',
+  textDecoration: 'none',
+  lineHeight: 1,
+  cursor: 'pointer',
+  fontSize: '1.04rem',
+  fontWeight: 400,
+  letterSpacing: '-0.03em',
+  color: '#ffffff',
+  background: 'linear-gradient(135deg, #1c72ff, #3d8bff)',
+  boxShadow: '0 0 0 1px rgba(142, 180, 255, 0.24), 0 0 44px rgba(27, 114, 255, 0.42)',
+} as const
+
+const heroSecondaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: '210px',
+  minHeight: '60px',
+  padding: '0 30px',
+  borderRadius: '999px',
+  textDecoration: 'none',
+  lineHeight: 1,
+  cursor: 'pointer',
+  fontSize: '1.04rem',
+  fontWeight: 400,
+  letterSpacing: '-0.03em',
+  color: '#f4f7ff',
+  border: '1px solid rgba(255, 255, 255, 0.16)',
+  background: 'rgba(255, 255, 255, 0.06)',
+  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 34px rgba(0, 0, 0, 0.2)',
+} as const
+
+const planPrimaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  minHeight: '56px',
+  marginTop: 'auto',
+  padding: '0 22px',
+  borderRadius: '999px',
+  textDecoration: 'none',
+  lineHeight: 1,
+  cursor: 'pointer',
+  fontSize: '0.96rem',
+  fontWeight: 400,
+  letterSpacing: '-0.03em',
+  color: '#ffffff',
+  background: 'linear-gradient(135deg, #1c72ff, #3d8bff)',
+  border: '1px solid rgba(140, 178, 255, 0.3)',
+  boxShadow: '0 0 0 1px rgba(142, 180, 255, 0.16), 0 0 32px rgba(27, 114, 255, 0.35)',
+} as const
+
+const planSecondaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  minHeight: '56px',
+  marginTop: 'auto',
+  padding: '0 22px',
+  borderRadius: '999px',
+  textDecoration: 'none',
+  lineHeight: 1,
+  cursor: 'pointer',
+  fontSize: '0.96rem',
+  fontWeight: 400,
+  letterSpacing: '-0.03em',
+  color: '#f5f8ff',
+  border: '1px solid rgba(255, 255, 255, 0.16)',
+  background: 'rgba(255, 255, 255, 0.06)',
+  boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 34px rgba(0, 0, 0, 0.2)',
+} as const
+
 export default function HomePage() {
   const valueProps = buildCreatorValueProps()
   const plans = getCreatorPlans()
@@ -50,11 +132,11 @@ export default function HomePage() {
             </p>
 
             <div className="hero-actions">
-              <Link href="/apply" className="primary-cta primary-cta--hero">
+              <Link href="/apply" style={heroPrimaryButtonStyle}>
                 立即加入
                 <span aria-hidden="true">→</span>
               </Link>
-              <Link href="/creator-workspace" className="secondary-cta secondary-cta--hero">
+              <Link href="/creator-workspace" style={heroSecondaryButtonStyle}>
                 前往工作台
               </Link>
             </div>
@@ -150,7 +232,7 @@ export default function HomePage() {
 
                 <Link
                   href="/apply"
-                  className={plan.recommended ? 'plan-cta plan-cta--primary' : 'plan-cta plan-cta--secondary'}
+                  style={plan.recommended ? planPrimaryButtonStyle : planSecondaryButtonStyle}
                 >
                   {plan.id === 'creator-core' ? '先免費加入' : '選擇此方案'}
                 </Link>
@@ -285,100 +367,6 @@ export default function HomePage() {
           justify-content: center;
           gap: 14px;
           margin-top: 32px;
-        }
-
-        .primary-cta,
-        .secondary-cta,
-        .plan-cta {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          min-height: 58px;
-          padding: 0 24px;
-          border-radius: 999px;
-          text-decoration: none !important;
-          font-size: 0.98rem;
-          font-weight: 400;
-          letter-spacing: -0.03em;
-          line-height: 1;
-          cursor: pointer;
-          transition:
-            transform 180ms ease,
-            box-shadow 180ms ease,
-            border-color 180ms ease,
-            background 180ms ease;
-        }
-
-        .primary-cta {
-          color: #ffffff;
-          background: linear-gradient(135deg, #1c72ff, #3d8bff);
-          box-shadow:
-            0 0 0 1px rgba(142, 180, 255, 0.22),
-            0 0 42px rgba(27, 114, 255, 0.46);
-        }
-
-        .secondary-cta,
-        .plan-cta {
-          color: rgba(244, 247, 255, 0.9);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.03);
-        }
-
-        .primary-cta--hero,
-        .secondary-cta--hero {
-          min-width: 210px;
-          min-height: 60px;
-          padding: 0 30px;
-          font-size: 1.04rem;
-          border-radius: 999px;
-        }
-
-        .secondary-cta--hero,
-        .plan-cta--secondary {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.16);
-          box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.05),
-            0 14px 34px rgba(0, 0, 0, 0.2);
-        }
-
-        .secondary-cta--hero {
-          color: #f4f7ff;
-        }
-
-        .primary-cta--hero {
-          box-shadow:
-            0 0 0 1px rgba(142, 180, 255, 0.24),
-            0 0 44px rgba(27, 114, 255, 0.42);
-        }
-
-        .plan-cta--primary {
-          color: #ffffff;
-          background: linear-gradient(135deg, #1c72ff, #3d8bff);
-          border-color: rgba(140, 178, 255, 0.3);
-          box-shadow:
-            0 0 0 1px rgba(142, 180, 255, 0.16),
-            0 0 32px rgba(27, 114, 255, 0.35);
-        }
-
-        .plan-cta {
-          width: 100%;
-          min-height: 56px;
-          margin-top: auto;
-          padding: 0 22px;
-          font-size: 0.96rem;
-        }
-
-        .plan-cta--secondary {
-          color: #f5f8ff;
-        }
-
-        .primary-cta:hover,
-        .secondary-cta:hover,
-        .plan-cta:hover {
-          transform: translateY(-1px);
-          border-color: rgba(151, 186, 255, 0.3);
         }
 
         .hero-foot {
