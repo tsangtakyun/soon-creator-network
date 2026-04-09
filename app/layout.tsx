@@ -32,7 +32,7 @@ function NavBar() {
         </div>
       </nav>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .site-nav {
           position: sticky;
           top: 18px;
@@ -83,14 +83,14 @@ function NavBar() {
           flex-wrap: wrap;
         }
 
-        .nav-links :global(a) {
+        .nav-links a {
           color: rgba(233, 236, 245, 0.8);
           text-decoration: none;
           font-size: 0.95rem;
           transition: color 160ms ease;
         }
 
-        .nav-links :global(a:hover) {
+        .nav-links a:hover {
           color: #ffffff;
         }
 
@@ -158,11 +158,11 @@ function NavBar() {
             gap: 10px 14px;
           }
 
-          .nav-links :global(a) {
+          .nav-links a {
             font-size: 0.9rem;
           }
         }
-      `}</style>
+      ` }} />
     </>
   )
 }
@@ -173,7 +173,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <NavBar />
         {children}
-        <style jsx global>{`
+        <style dangerouslySetInnerHTML={{ __html: `
           :root {
             color-scheme: dark;
           }
@@ -214,7 +214,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           a {
             color: inherit;
           }
-        `}</style>
+        ` }} />
       </body>
     </html>
   )
