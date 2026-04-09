@@ -368,28 +368,28 @@ export function buildCreatorAiPreview(form: CreatorApplyForm) {
 
   return {
     archetype: categories.includes('food')
-      ? 'Food Discovery Creator'
+      ? '餐飲探索型創作者'
       : categories.includes('travel')
-        ? 'Travel Experience Creator'
+        ? '旅遊體驗型創作者'
         : categories.includes('lifestyle')
-          ? 'Lifestyle Trust Creator'
-          : 'Multi-Category Creator',
+          ? '生活風格信任型創作者'
+          : '多元內容型創作者',
     fitObjective: form.recentConversionCampaigns.some((item) => item.trim())
-      ? '適合接 conversion / trust-driven campaigns'
-      : '適合先接 awareness / engagement campaigns',
+      ? '較適合承接轉換導向或信任建立型合作'
+      : '較適合先承接品牌曝光或互動導向合作',
     strength: primaryPlatform === 'instagram'
-      ? '適合短片內容、brand-facing Reel 合作同 visual storytelling'
-      : '適合用自身平台特性做 niche audience matching',
+      ? '適合短片內容、品牌合作短片與視覺敘事類型內容'
+      : '適合運用平台特性接觸明確受眾與內容主題',
     fitSummary: categories.includes('food')
-      ? '較適合餐飲、打卡位、到店體驗類 campaign'
+      ? '較適合餐飲、到店體驗與生活消費類合作'
       : categories.includes('travel')
-        ? '較適合旅遊體驗、地點敘事、攻略內容類 campaign'
+        ? '較適合旅遊體驗、地點敘事與攻略內容類合作'
         : categories.includes('lifestyle')
-          ? '較適合品牌感、信任感、日常植入類 campaign'
-          : '較適合做 multi-angle 測試型 campaign',
+          ? '較適合品牌感、信任感與日常情境植入類合作'
+          : '較適合多角度測試與綜合型內容合作',
     selectedPlanSummary: selectedPlan
       ? `${selectedPlan.name} · ${selectedPlan.subtitle}`
-      : '未揀計劃',
+      : '尚未選擇方案',
   }
 }
 

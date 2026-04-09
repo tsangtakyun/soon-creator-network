@@ -73,7 +73,7 @@ export default async function ThankYouPage({
             fontWeight: 350,
           }}
         >
-          已收到你的 SOON Creator 申請
+          已收到你的 SOON 創作者申請
         </h1>
         <p
           style={{

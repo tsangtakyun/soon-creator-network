@@ -17,6 +17,15 @@ export default function ThankYouClient({
 }: ThankYouClientProps) {
   const [statusMessage, setStatusMessage] = useState('')
 
+  const planLabel =
+    plan === 'creator-growth'
+      ? 'Creator Growth'
+      : plan === 'creator-studio'
+        ? 'Creator Studio'
+        : plan === 'creator-core'
+          ? 'Creator Core'
+          : plan
+
   useEffect(() => {
     if (payment !== 'success' || !sessionId || !applicationId) return
 
@@ -43,7 +52,7 @@ export default function ThankYouClient({
         }
 
         if (!cancelled) {
-          setStatusMessage(plan ? `已確認 ${plan} 付款，你的創作者流程已正式啟動。` : '已完成付款確認。')
+          setStatusMessage(planLabel ? `已確認 ${planLabel} 付款，你的創作者流程已正式啟動。` : '已完成付款確認。')
         }
       } catch (error) {
         if (!cancelled) {
@@ -57,7 +66,7 @@ export default function ThankYouClient({
     return () => {
       cancelled = true
     }
-  }, [applicationId, payment, plan, sessionId])
+  }, [applicationId, payment, planLabel, sessionId])
 
   if (!statusMessage) return null
 

@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'SOON Creator Network',
-  description: 'Join SOON Creator Network to access safer jobs, creator tools, and AI campaign matching.',
+  description: '加入 SOON Creator Network，使用更穩定的合作流程、創作工具與 AI 工作流程。',
 }
 
 function NavBar() {

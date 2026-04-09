@@ -95,7 +95,7 @@ export default async function CreatorWorkspacePage() {
           >
             {latestApplication?.creator_name
               ? `${latestApplication.creator_name} 的工作台`
-              : 'SOON Creator Workspace'}
+              : 'SOON 創作者工作台'}
           </h1>
           <p
             style={{
