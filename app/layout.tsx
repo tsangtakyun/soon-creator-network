@@ -8,48 +8,213 @@ export const metadata: Metadata = {
 
 function NavBar() {
   return (
-    <nav style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 1000,
-      backgroundColor: '#F5F2EC',
-      borderBottom: '1px solid #e0ddd6',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 32px',
-      height: '54px',
-      fontFamily: 'Georgia, Times New Roman, serif',
-    }}>
-      <Link href="/" style={{ fontSize: '13px', letterSpacing: '0.16em', color: '#888', textDecoration: 'none' }}>
-        SOON CREATOR
-      </Link>
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        <Link href="/apply" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
-          Apply Now
+    <>
+      <nav className="site-nav">
+        <Link href="/" className="brand-mark">
+          <span className="brand-dot" />
+          <span>SOON Creator</span>
         </Link>
-        <Link href="/internal/review" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
-          Internal Review
-        </Link>
-        <Link href="/internal/database" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
-          Approved Database
-        </Link>
-        <Link href="/login" style={{ fontSize: '13px', color: '#1a1a1a', textDecoration: 'none', padding: '6px 14px', borderBottom: '1px solid #1a1a1a', letterSpacing: '0.03em' }}>
-          Google Login
-        </Link>
-      </div>
-    </nav>
+
+        <div className="nav-links">
+          <a href="/#why-soon">Why SOON</a>
+          <a href="/#plans">Plans</a>
+          <Link href="/apply">Apply</Link>
+          <Link href="/creator-workspace">Workspace</Link>
+        </div>
+
+        <div className="nav-actions">
+          <Link href="/login" className="nav-secondary">
+            Google Login
+          </Link>
+          <Link href="/apply" className="nav-primary">
+            Join Network
+          </Link>
+        </div>
+      </nav>
+
+      <style jsx>{`
+        .site-nav {
+          position: sticky;
+          top: 18px;
+          z-index: 1000;
+          width: min(1240px, calc(100% - 32px));
+          margin: 18px auto 0;
+          padding: 14px 18px;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background:
+            linear-gradient(180deg, rgba(15, 18, 24, 0.92), rgba(7, 8, 11, 0.92));
+          box-shadow:
+            0 18px 60px rgba(0, 0, 0, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(18px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .brand-mark {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          color: #f6f7fb;
+          text-decoration: none;
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: -0.03em;
+          white-space: nowrap;
+        }
+
+        .brand-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #70a5ff, #2458ff);
+          box-shadow: 0 0 22px rgba(54, 111, 255, 0.9);
+        }
+
+        .nav-links {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          flex: 1;
+          flex-wrap: wrap;
+        }
+
+        .nav-links :global(a) {
+          color: rgba(233, 236, 245, 0.8);
+          text-decoration: none;
+          font-size: 0.95rem;
+          transition: color 160ms ease;
+        }
+
+        .nav-links :global(a:hover) {
+          color: #ffffff;
+        }
+
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+
+        .nav-secondary,
+        .nav-primary {
+          text-decoration: none;
+          border-radius: 999px;
+          padding: 11px 18px;
+          font-size: 0.95rem;
+          white-space: nowrap;
+        }
+
+        .nav-secondary {
+          color: rgba(239, 243, 255, 0.88);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-primary {
+          color: #ffffff;
+          background: linear-gradient(135deg, #2d76ff, #4c8dff);
+          box-shadow:
+            0 0 0 1px rgba(136, 174, 255, 0.22),
+            0 0 30px rgba(45, 118, 255, 0.45);
+        }
+
+        @media (max-width: 980px) {
+          .site-nav {
+            border-radius: 28px;
+            padding: 16px;
+            top: 12px;
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .nav-links {
+            justify-content: flex-start;
+          }
+
+          .nav-actions {
+            justify-content: stretch;
+          }
+
+          .nav-secondary,
+          .nav-primary {
+            flex: 1;
+            text-align: center;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .site-nav {
+            width: min(100% - 20px, 1240px);
+          }
+
+          .nav-links {
+            gap: 10px 14px;
+          }
+
+          .nav-links :global(a) {
+            font-size: 0.9rem;
+          }
+        }
+      `}</style>
+    </>
   )
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-HK">
-      <body style={{ margin: 0, padding: 0, paddingTop: '54px', background: '#f5f0e6' }}>
+      <body>
         <NavBar />
         {children}
+        <style jsx global>{`
+          :root {
+            color-scheme: dark;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          html {
+            scroll-behavior: smooth;
+          }
+
+          body {
+            margin: 0;
+            min-height: 100vh;
+            font-family:
+              Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+              "Segoe UI", sans-serif;
+            background:
+              radial-gradient(circle at top, rgba(41, 98, 255, 0.22), transparent 28%),
+              linear-gradient(180deg, #040507 0%, #06080c 36%, #050608 100%);
+            color: #f7f8fb;
+          }
+
+          body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+              linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(circle at center, black, transparent 84%);
+            opacity: 0.2;
+          }
+
+          a {
+            color: inherit;
+          }
+        `}</style>
       </body>
     </html>
   )
