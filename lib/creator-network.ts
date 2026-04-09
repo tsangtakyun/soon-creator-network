@@ -142,9 +142,9 @@ export type CreatorToolAccess = {
 
 export function getCreatorToolDestination(toolSlug: string) {
   const destinations: Record<string, string> = {
-    'idea-library': 'https://idea-brainstorm.vercel.app',
-    'script-creation': 'https://script-generator-xi.vercel.app',
-    storyboard: 'https://soon-storyboard.vercel.app',
+    'idea-library': 'https://idea-brainstorm.vercel.app?creator_mode=1',
+    'script-creation': 'https://script-generator-xi.vercel.app?creator_mode=1',
+    storyboard: 'https://soon-storyboard.vercel.app/storyboard?creator_mode=1',
   }
 
   return destinations[toolSlug] ?? ''
