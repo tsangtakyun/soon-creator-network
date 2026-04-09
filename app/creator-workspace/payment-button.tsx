@@ -56,12 +56,26 @@ export default function CreatorPlanPaymentButton({
         type="button"
         onClick={handleCheckout}
         disabled={isPending}
-        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#1a1a18', color: '#f5efe5', padding: '12px 16px', border: 'none', cursor: 'pointer', width: 'fit-content', opacity: isPending ? 0.72 : 1 }}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '54px',
+          width: 'fit-content',
+          borderRadius: '999px',
+          background: 'linear-gradient(135deg, #1c72ff, #3d8bff)',
+          color: '#ffffff',
+          padding: '0 20px',
+          border: '1px solid rgba(142,180,255,0.24)',
+          cursor: 'pointer',
+          opacity: isPending ? 0.72 : 1,
+          boxShadow: '0 0 0 1px rgba(142,180,255,0.16), 0 0 28px rgba(27,114,255,0.32)',
+        }}
       >
         {isPending ? '前往付款中...' : '立即完成 Stripe 付款'}
       </button>
       {error ? (
-        <div style={{ padding: '12px 14px', borderRadius: '14px', background: '#fbf1ef', border: '1px solid rgba(26,26,24,0.08)', color: '#7d493f', lineHeight: 1.7 }}>
+        <div style={{ padding: '12px 14px', borderRadius: '14px', background: 'rgba(181,69,69,0.16)', border: '1px solid rgba(255,255,255,0.06)', color: '#ffe7e3', lineHeight: 1.7 }}>
           {error}
         </div>
       ) : null}
