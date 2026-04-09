@@ -17,6 +17,97 @@ import {
   isPaidCreatorPlan,
 } from '@/lib/creator-network'
 
+const shellStyle = {
+  minHeight: '100vh',
+  padding: '40px 24px 100px',
+  color: '#f7f8fb',
+} as const
+
+const containerStyle = {
+  maxWidth: '1240px',
+  margin: '0 auto',
+  display: 'grid',
+  gap: '22px',
+} as const
+
+const cardStyle = {
+  position: 'relative',
+  overflow: 'hidden',
+  borderRadius: '30px',
+  border: '1px solid rgba(255,255,255,0.08)',
+  background: 'linear-gradient(180deg, rgba(13,15,21,0.92), rgba(7,8,12,0.94))',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 28px 80px rgba(0,0,0,0.36)',
+} as const
+
+const sectionTitleStyle = {
+  fontSize: '12px',
+  letterSpacing: '0.18em',
+  textTransform: 'uppercase' as const,
+  color: 'rgba(162, 178, 214, 0.8)',
+  marginBottom: '10px',
+} as const
+
+const labelStyle = {
+  fontSize: '14px',
+  color: 'rgba(228,233,245,0.86)',
+  letterSpacing: '-0.02em',
+} as const
+
+const inputBaseStyle = {
+  width: '100%',
+  minHeight: '52px',
+  padding: '0 16px',
+  borderRadius: '16px',
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'rgba(255,255,255,0.04)',
+  color: '#f7f8fb',
+  fontSize: '15px',
+  boxSizing: 'border-box' as const,
+  outline: 'none',
+} as const
+
+const pillButtonBase = {
+  borderRadius: '999px',
+  border: '1px solid rgba(255,255,255,0.12)',
+  background: 'rgba(255,255,255,0.03)',
+  color: 'rgba(244,247,255,0.88)',
+  padding: '10px 14px',
+  cursor: 'pointer',
+  fontSize: '14px',
+  lineHeight: 1,
+} as const
+
+const primaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '56px',
+  padding: '0 24px',
+  borderRadius: '999px',
+  border: '1px solid rgba(142,180,255,0.24)',
+  background: 'linear-gradient(135deg, #1c72ff, #3d8bff)',
+  color: '#ffffff',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  fontSize: '15px',
+  boxShadow: '0 0 0 1px rgba(142,180,255,0.16), 0 0 32px rgba(27,114,255,0.35)',
+} as const
+
+const secondaryButtonStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '56px',
+  padding: '0 24px',
+  borderRadius: '999px',
+  border: '1px solid rgba(255,255,255,0.14)',
+  background: 'rgba(255,255,255,0.05)',
+  color: '#f4f7ff',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  fontSize: '15px',
+} as const
+
 export default function ApplyPage() {
   const router = useRouter()
   const [form, setForm] = useState(defaultCreatorApplyForm)
@@ -58,7 +149,7 @@ export default function ApplyPage() {
 
   function handleSubmit() {
     setSubmitError('')
-    setSubmitMessage('先為你整理 creator onboarding 資料...')
+    setSubmitMessage('正在整理創作者申請資料...')
 
     startTransition(async () => {
       try {
@@ -101,12 +192,12 @@ export default function ApplyPage() {
             throw new Error('未收到 Stripe checkout URL。')
           }
 
-          setSubmitMessage('即將跳去 Stripe 付款頁...')
+          setSubmitMessage('即將跳轉至 Stripe 付款頁面...')
           window.location.href = checkoutResult.url
           return
         }
 
-        setSubmitMessage('已收到申請，準備跳去確認頁...')
+        setSubmitMessage('已收到申請，正在前往確認頁面...')
         router.push(`/thank-you?id=${result.id}`)
       } catch (error) {
         setSubmitMessage('')
@@ -116,42 +207,79 @@ export default function ApplyPage() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #f6f1e8 0%, #ece3d6 100%)', padding: '42px 24px 90px', fontFamily: 'Georgia, Times New Roman, serif', color: '#1a1a18' }}>
-      <div style={{ maxWidth: '1180px', margin: '0 auto', display: 'grid', gap: '20px' }}>
-        <section style={{ padding: '30px', borderRadius: '28px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)' }}>
-          <p style={{ margin: '0 0 8px', fontSize: '12px', letterSpacing: '0.18em', color: '#8b7c69' }}>CREATOR APPLY</p>
-          <h1 style={{ margin: '0 0 12px', fontSize: '52px', lineHeight: 1.02, fontWeight: 500 }}>登記成為 SOON Creator</h1>
-          <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.7, color: '#5b5348', maxWidth: '860px' }}>
-            第一版先收集你嘅基本資料、平台 links、內容定位同過去 28 日平台數據 cap 圖。提交後，SOON 會用 AI 幫你分析邊類 campaign 最適合你，之後再放入 creator matching database。
+    <main style={shellStyle}>
+      <div style={containerStyle}>
+        <section style={{ ...cardStyle, padding: '40px' }}>
+          <div style={sectionTitleStyle}>創作者申請</div>
+          <h1
+            style={{
+              margin: '0 0 14px',
+              fontSize: 'clamp(2.6rem, 5vw, 4.5rem)',
+              lineHeight: 0.96,
+              letterSpacing: '-0.07em',
+              fontWeight: 350,
+            }}
+          >
+            申請加入 SOON Creator Network
+          </h1>
+          <p
+            style={{
+              margin: 0,
+              maxWidth: '900px',
+              color: 'rgba(210,217,234,0.8)',
+              fontSize: '18px',
+              lineHeight: 1.8,
+            }}
+          >
+            第一版會先收集你的基本資料、平台連結、內容方向與近期數據資料。提交後，SOON 會先建立第一輪創作者分析，並按方案安排後續工作流程。
           </p>
         </section>
 
-        <section style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.05fr) 320px', gap: '22px', alignItems: 'start' }}>
+        <section
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1.04fr) 360px',
+            gap: '22px',
+            alignItems: 'start',
+          }}
+        >
           <div style={{ display: 'grid', gap: '18px' }}>
-            <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69', marginBottom: '8px' }}>BASIC INFO</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <section style={{ ...cardStyle, padding: '24px' }}>
+              <div style={sectionTitleStyle}>基本資料</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                 {[
-                  ['creatorName', 'Creator Name'],
-                  ['contactName', '聯絡人名稱'],
-                  ['email', 'Email'],
+                  ['creatorName', '創作者名稱'],
+                  ['contactName', '聯絡人姓名'],
+                  ['email', '電子郵件'],
                   ['whatsapp', 'WhatsApp'],
                 ].map(([key, label]) => (
                   <label key={key} style={{ display: 'grid', gap: '8px' }}>
-                    <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
-                    <input value={form[key as keyof typeof form] as string} onChange={(e) => updateField(key as keyof typeof form, e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }} />
+                    <div style={labelStyle}>{label}</div>
+                    <input
+                      value={form[key as keyof typeof form] as string}
+                      onChange={(e) => updateField(key as keyof typeof form, e.target.value)}
+                      style={inputBaseStyle}
+                    />
                   </label>
                 ))}
+
                 <label style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>國家 / 地區</div>
-                  <select value={form.country} onChange={(e) => updateField('country', e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}>
+                  <div style={labelStyle}>國家／地區</div>
+                  <select
+                    value={form.country}
+                    onChange={(e) => updateField('country', e.target.value)}
+                    style={inputBaseStyle}
+                  >
                     {creatorCountryOptions.map((option) => (
-                      <option key={option} value={option}>{option}</option>
+                      <option key={option} value={option} style={{ color: '#111' }}>
+                        {option}
+                      </option>
                     ))}
                   </select>
                 </label>
+
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>語言（可多揀）</div>
+                  <div style={labelStyle}>語言（可多選）</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {creatorLanguageOptions.map((option) => {
                       const selected = form.languages.includes(option)
@@ -161,12 +289,10 @@ export default function ApplyPage() {
                           type="button"
                           onClick={() => toggleMultiValue('languages', option)}
                           style={{
-                            borderRadius: '999px',
-                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
-                            background: selected ? '#1a1a18' : '#fff',
-                            color: selected ? '#f5efe5' : '#1a1a18',
-                            padding: '10px 12px',
-                            cursor: 'pointer',
+                            ...pillButtonBase,
+                            background: selected ? 'linear-gradient(135deg, #1c72ff, #3d8bff)' : pillButtonBase.background,
+                            color: selected ? '#fff' : pillButtonBase.color,
+                            border: selected ? '1px solid rgba(142,180,255,0.28)' : pillButtonBase.border,
                           }}
                         >
                           {option}
@@ -178,31 +304,42 @@ export default function ApplyPage() {
               </div>
             </section>
 
-            <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69', marginBottom: '8px' }}>PLATFORM LINKS</div>
+            <section style={{ ...cardStyle, padding: '24px' }}>
+              <div style={sectionTitleStyle}>平台連結</div>
               <div style={{ display: 'grid', gap: '12px' }}>
+                <label style={{ display: 'grid', gap: '8px' }}>
+                  <div style={labelStyle}>主要平台</div>
+                  <input
+                    value={form.primaryPlatform}
+                    onChange={(e) => updateField('primaryPlatform', e.target.value)}
+                    style={inputBaseStyle}
+                  />
+                </label>
                 {[
-                  ['primaryPlatform', '主要平台'],
-                  ['instagramUrl', 'Instagram Link'],
-                  ['tiktokUrl', 'TikTok Link'],
-                  ['youtubeUrl', 'YouTube Link'],
-                  ['threadsUrl', 'Threads Link'],
-                  ['xiaohongshuUrl', '小紅書 Link'],
-                  ['otherLinks', '其他平台 / Portfolio Links'],
+                  ['instagramUrl', 'Instagram 連結'],
+                  ['tiktokUrl', 'TikTok 連結'],
+                  ['youtubeUrl', 'YouTube 連結'],
+                  ['threadsUrl', 'Threads 連結'],
+                  ['xiaohongshuUrl', '小紅書連結'],
+                  ['otherLinks', '其他平台／作品集連結'],
                 ].map(([key, label]) => (
                   <label key={key} style={{ display: 'grid', gap: '8px' }}>
-                    <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
-                    <input value={form[key as keyof typeof form]} onChange={(e) => updateField(key as keyof typeof form, e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }} />
+                    <div style={labelStyle}>{label}</div>
+                    <input
+                      value={form[key as keyof typeof form]}
+                      onChange={(e) => updateField(key as keyof typeof form, e.target.value)}
+                      style={inputBaseStyle}
+                    />
                   </label>
                 ))}
               </div>
             </section>
 
-            <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69', marginBottom: '8px' }}>CONTENT + COMMERCIAL INFO</div>
-              <div style={{ display: 'grid', gap: '12px' }}>
+            <section style={{ ...cardStyle, padding: '24px' }}>
+              <div style={sectionTitleStyle}>內容與商務資料</div>
+              <div style={{ display: 'grid', gap: '16px' }}>
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>你曾經拍過嘅內容類別（可多揀）</div>
+                  <div style={labelStyle}>內容類別（可多選）</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {creatorContentCategoryOptions.map((option) => {
                       const selected = form.contentCategories.includes(option)
@@ -212,13 +349,11 @@ export default function ApplyPage() {
                           type="button"
                           onClick={() => toggleMultiValue('contentCategories', option)}
                           style={{
-                            borderRadius: '999px',
-                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
-                            background: selected ? '#1a1a18' : '#fff',
-                            color: selected ? '#f5efe5' : '#1a1a18',
-                            padding: '10px 12px',
-                            cursor: 'pointer',
+                            ...pillButtonBase,
                             textTransform: 'capitalize',
+                            background: selected ? 'linear-gradient(135deg, #1c72ff, #3d8bff)' : pillButtonBase.background,
+                            color: selected ? '#fff' : pillButtonBase.color,
+                            border: selected ? '1px solid rgba(142,180,255,0.28)' : pillButtonBase.border,
                           }}
                         >
                           {option}
@@ -229,7 +364,7 @@ export default function ApplyPage() {
                 </div>
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>內容形式（可多揀）</div>
+                  <div style={labelStyle}>內容形式（可多選）</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {creatorContentFormatOptions.map((option) => {
                       const selected = form.contentFormats.includes(option)
@@ -239,12 +374,10 @@ export default function ApplyPage() {
                           type="button"
                           onClick={() => toggleMultiValue('contentFormats', option)}
                           style={{
-                            borderRadius: '999px',
-                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
-                            background: selected ? '#1a1a18' : '#fff',
-                            color: selected ? '#f5efe5' : '#1a1a18',
-                            padding: '10px 12px',
-                            cursor: 'pointer',
+                            ...pillButtonBase,
+                            background: selected ? 'linear-gradient(135deg, #1c72ff, #3d8bff)' : pillButtonBase.background,
+                            color: selected ? '#fff' : pillButtonBase.color,
+                            border: selected ? '1px solid rgba(142,180,255,0.28)' : pillButtonBase.border,
                           }}
                         >
                           {option}
@@ -254,67 +387,45 @@ export default function ApplyPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>Audience / 28 日數據摘要 cap 圖 links</div>
-                  <div style={{ display: 'grid', gap: '10px' }}>
-                    {form.audienceInsightLinks.map((value, index) => (
-                      <input
-                        key={`audience-link-${index}`}
-                        value={value}
-                        onChange={(e) => updateListField('audienceInsightLinks', index, e.target.value)}
-                        placeholder={`Cap 圖 / Google Drive Link ${index + 1}`}
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ListInputGroup
+                  label="Audience／最近 28 日數據摘要連結"
+                  values={form.audienceInsightLinks}
+                  placeholderPrefix="數據資料連結"
+                  onChange={(index, value) => updateListField('audienceInsightLinks', index, value)}
+                />
 
-                <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>曾經嘅品牌合作（最近 5 個）</div>
-                  <div style={{ display: 'grid', gap: '10px' }}>
-                    {form.recentBrandCollabs.map((value, index) => (
-                      <input
-                        key={`brand-collab-${index}`}
-                        value={value}
-                        onChange={(e) => updateListField('recentBrandCollabs', index, e.target.value)}
-                        placeholder={`品牌合作 ${index + 1}`}
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ListInputGroup
+                  label="最近 5 個品牌合作"
+                  values={form.recentBrandCollabs}
+                  placeholderPrefix="品牌合作"
+                  onChange={(index, value) => updateListField('recentBrandCollabs', index, value)}
+                />
 
-                <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>有冇做過帶轉化 / sales campaign？（最近 5 個）</div>
-                  <div style={{ display: 'grid', gap: '10px' }}>
-                    {form.recentConversionCampaigns.map((value, index) => (
-                      <input
-                        key={`conversion-campaign-${index}`}
-                        value={value}
-                        onChange={(e) => updateListField('recentConversionCampaigns', index, e.target.value)}
-                        placeholder={`Sales campaign ${index + 1}`}
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ListInputGroup
+                  label="最近 5 個帶轉化合作"
+                  values={form.recentConversionCampaigns}
+                  placeholderPrefix="轉化合作"
+                  onChange={(index, value) => updateListField('recentConversionCampaigns', index, value)}
+                />
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                   {[
                     ['usualReelRate', '一條 Reel 收費'],
-                    ['usualPostRate', '一個 Post 收費'],
-                    ['usualStoryRate', '一個 Story 收費'],
+                    ['usualPostRate', '一則 Post 收費'],
+                    ['usualStoryRate', '一則 Story 收費'],
                   ].map(([key, label]) => (
                     <label key={key} style={{ display: 'grid', gap: '8px' }}>
-                      <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
+                      <div style={labelStyle}>{label}</div>
                       <select
                         value={form[key as 'usualReelRate' | 'usualPostRate' | 'usualStoryRate']}
                         onChange={(e) => updateField(key as keyof typeof defaultCreatorApplyForm, e.target.value)}
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                        style={inputBaseStyle}
                       >
-                        <option value="">請選擇</option>
+                        <option value="" style={{ color: '#111' }}>請選擇</option>
                         {creatorRateRangeOptions.map((option) => (
-                          <option key={option} value={option}>{option}</option>
+                          <option key={option} value={option} style={{ color: '#111' }}>
+                            {option}
+                          </option>
                         ))}
                       </select>
                     </label>
@@ -322,7 +433,7 @@ export default function ApplyPage() {
                 </div>
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>可接拍攝地區（可多揀）</div>
+                  <div style={labelStyle}>可接拍攝地區（可多選）</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {creatorAvailableRegionOptions.map((option) => {
                       const selected = form.availableRegions.includes(option)
@@ -332,12 +443,10 @@ export default function ApplyPage() {
                           type="button"
                           onClick={() => toggleMultiValue('availableRegions', option)}
                           style={{
-                            borderRadius: '999px',
-                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
-                            background: selected ? '#1a1a18' : '#fff',
-                            color: selected ? '#f5efe5' : '#1a1a18',
-                            padding: '10px 12px',
-                            cursor: 'pointer',
+                            ...pillButtonBase,
+                            background: selected ? 'linear-gradient(135deg, #1c72ff, #3d8bff)' : pillButtonBase.background,
+                            color: selected ? '#fff' : pillButtonBase.color,
+                            border: selected ? '1px solid rgba(142,180,255,0.28)' : pillButtonBase.border,
                           }}
                         >
                           {option}
@@ -348,36 +457,30 @@ export default function ApplyPage() {
                 </div>
 
                 <label style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>一般交片時間</div>
+                  <div style={labelStyle}>一般交付時間</div>
                   <input
                     value={form.turnaroundDays}
                     onChange={(e) => updateField('turnaroundDays', e.target.value)}
-                    style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                    style={inputBaseStyle}
                   />
                 </label>
 
-                <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '14px', color: '#5b5348' }}>最代表你 style 嘅 3 條 content links</div>
-                  <div style={{ display: 'grid', gap: '10px' }}>
-                    {form.topContentLinks.map((value, index) => (
-                      <input
-                        key={`top-content-link-${index}`}
-                        value={value}
-                        onChange={(e) => updateListField('topContentLinks', index, e.target.value)}
-                        placeholder={`Content link ${index + 1}`}
-                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ListInputGroup
+                  label="最能代表你風格的 3 條內容連結"
+                  values={form.topContentLinks}
+                  placeholderPrefix="作品連結"
+                  onChange={(index, value) => updateListField('topContentLinks', index, value)}
+                />
               </div>
             </section>
 
-            <section style={{ padding: '24px', borderRadius: '24px', background: '#121212', color: '#f5efe5', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#c7bdaf', marginBottom: '8px' }}>CREATOR PLANS</div>
-              <div style={{ fontSize: '38px', lineHeight: 1.05, marginBottom: '10px' }}>揀你想用嘅 SOON Creator 計劃</div>
-              <div style={{ fontSize: '17px', lineHeight: 1.7, color: '#e8ddcf', marginBottom: '18px', maxWidth: '760px' }}>
-                唔同 level 會影響你每月可用幾多 credits。最基本一定可以安全接 job；之後再按你想用幾多題材庫、script creation 同 storyboard 去揀。
+            <section style={{ ...cardStyle, padding: '24px' }}>
+              <div style={sectionTitleStyle}>創作者方案</div>
+              <div style={{ fontSize: '36px', lineHeight: 1.04, marginBottom: '10px', fontWeight: 350 }}>
+                選擇適合你的 SOON 方案
+              </div>
+              <div style={{ fontSize: '16px', lineHeight: 1.8, color: 'rgba(216,221,235,0.76)', marginBottom: '18px' }}>
+                基本方案可先安全接案；如需更多題材研究、腳本與分鏡工作流程，則可按使用程度升級。
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
                 {plans.map((plan) => {
@@ -392,27 +495,30 @@ export default function ApplyPage() {
                         textAlign: 'left',
                         padding: '20px',
                         borderRadius: '24px',
-                        border: selected ? '1px solid rgba(255,255,255,0.72)' : '1px solid rgba(255,255,255,0.12)',
-                        background: selected ? 'linear-gradient(180deg, rgba(47,64,86,0.92) 0%, rgba(18,18,18,0.96) 100%)' : 'rgba(255,255,255,0.04)',
+                        border: selected ? '1px solid rgba(142,180,255,0.34)' : '1px solid rgba(255,255,255,0.12)',
+                        background: selected
+                          ? 'linear-gradient(180deg, rgba(19,45,92,0.92) 0%, rgba(13,15,21,0.98) 100%)'
+                          : 'rgba(255,255,255,0.04)',
                         color: '#f5efe5',
                         cursor: 'pointer',
+                        boxShadow: selected ? '0 0 0 1px rgba(142,180,255,0.12), 0 20px 44px rgba(7,25,69,0.35)' : 'none',
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
                         <div style={{ fontSize: '28px', lineHeight: 1.05 }}>{plan.name}</div>
                         {plan.recommended ? (
-                          <span style={{ borderRadius: '999px', background: 'rgba(245,239,229,0.12)', padding: '6px 10px', fontSize: '11px', letterSpacing: '0.12em' }}>
-                            RECOMMENDED
+                          <span style={{ borderRadius: '999px', background: 'rgba(61,141,255,0.14)', padding: '6px 10px', fontSize: '11px', letterSpacing: '0.12em', color: '#9ec2ff' }}>
+                            建議選擇
                           </span>
                         ) : null}
                       </div>
                       <div style={{ fontSize: '40px', lineHeight: 1, marginBottom: '8px' }}>{plan.monthlyLabel}</div>
-                      <div style={{ color: '#d9cfbf', marginBottom: '12px', lineHeight: 1.6 }}>{plan.subtitle}</div>
-                      <div style={{ color: '#c7bdaf', lineHeight: 1.7, marginBottom: '14px' }}>{plan.description}</div>
+                      <div style={{ color: 'rgba(216,221,235,0.76)', marginBottom: '12px', lineHeight: 1.6 }}>{plan.subtitle}</div>
+                      <div style={{ color: 'rgba(199,206,223,0.72)', lineHeight: 1.7, marginBottom: '14px' }}>{plan.description}</div>
                       <div style={{ display: 'grid', gap: '8px' }}>
                         {plan.features.map((feature) => (
                           <div key={feature} style={{ fontSize: '14px', lineHeight: 1.6 }}>
-                            ✓ {feature}
+                            • {feature}
                           </div>
                         ))}
                       </div>
@@ -422,22 +528,24 @@ export default function ApplyPage() {
               </div>
             </section>
 
-            <section style={{ padding: '26px', borderRadius: '24px', background: '#1a1a18', color: '#f5efe5', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#c7bdaf', marginBottom: '10px' }}>NEXT STEP</div>
-              <div style={{ fontSize: '34px', lineHeight: 1.08, marginBottom: '12px' }}>提交後，SOON 會用 AI 幫你做第一輪 creator analysis。</div>
-              <div style={{ fontSize: '17px', lineHeight: 1.7, color: '#e8ddcf', marginBottom: '18px', maxWidth: '780px' }}>
-                第一版我哋會先收集 onboarding form，將資料入庫，再用 AI 生成第一輪 creator snapshot。之後再加 upload、internal review 同 approved creator database。
+            <section style={{ ...cardStyle, padding: '26px' }}>
+              <div style={sectionTitleStyle}>下一步</div>
+              <div style={{ fontSize: '34px', lineHeight: 1.08, marginBottom: '12px', fontWeight: 350 }}>
+                提交後，SOON 會先建立第一輪創作者分析。
+              </div>
+              <div style={{ fontSize: '17px', lineHeight: 1.8, color: 'rgba(216,221,235,0.76)', marginBottom: '18px', maxWidth: '780px' }}>
+                系統會先整理你的 onboarding 資料，再建立創作者快照；如已選擇付費方案，提交後會直接前往 Stripe 付款流程。
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                 <button
                   type="button"
                   onClick={handleSubmit}
                   disabled={isPending}
-                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#f5efe5', color: '#1a1a18', padding: '14px 18px', textDecoration: 'none', fontSize: '14px', border: 'none', cursor: 'pointer', opacity: isPending ? 0.72 : 1 }}
+                  style={{ ...primaryButtonStyle, border: 'none', opacity: isPending ? 0.72 : 1 }}
                 >
                   {isPending ? '提交中...' : '提交申請'}
                 </button>
-                <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: 'transparent', color: '#f5efe5', padding: '14px 18px', textDecoration: 'none', fontSize: '14px', border: '1px solid rgba(245,239,229,0.35)' }}>
+                <Link href="/" style={secondaryButtonStyle}>
                   返回首頁
                 </Link>
               </div>
@@ -455,35 +563,27 @@ export default function ApplyPage() {
           </div>
 
           <aside style={{ position: 'sticky', top: '24px' }}>
-            <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.72)', border: '1px solid rgba(26,26,24,0.10)' }}>
-              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69', marginBottom: '10px' }}>AI PREVIEW</div>
-              <div style={{ fontSize: '34px', lineHeight: 1.05, color: '#1a1a18', marginBottom: '16px' }}>Creator Snapshot</div>
+            <section style={{ ...cardStyle, padding: '24px' }}>
+              <div style={sectionTitleStyle}>AI 預覽</div>
+              <div style={{ fontSize: '34px', lineHeight: 1.05, marginBottom: '16px', fontWeight: 350 }}>創作者快照</div>
               {preview ? (
                 <div style={{ display: 'grid', gap: '10px' }}>
-                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
-                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>Suggested Archetype</div>
-                    <div style={{ lineHeight: 1.7 }}>{preview.archetype}</div>
-                  </div>
-                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
-                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>Fit Objective</div>
-                    <div style={{ lineHeight: 1.7 }}>{preview.fitObjective}</div>
-                  </div>
-                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
-                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>Strength Summary</div>
-                    <div style={{ lineHeight: 1.7 }}>{preview.strength}</div>
-                  </div>
-                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
-                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>AI Fit Summary</div>
-                    <div style={{ lineHeight: 1.7 }}>{preview.fitSummary}</div>
-                  </div>
-                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
-                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>Selected Plan</div>
-                    <div style={{ lineHeight: 1.7 }}>{preview.selectedPlanSummary}</div>
-                  </div>
+                  {[
+                    ['建議類型', preview.archetype],
+                    ['適合目標', preview.fitObjective],
+                    ['優勢摘要', preview.strength],
+                    ['AI 配對判斷', preview.fitSummary],
+                    ['已選方案', preview.selectedPlanSummary],
+                  ].map(([title, value]) => (
+                    <div key={title} style={{ padding: '16px', borderRadius: '18px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                      <div style={{ fontSize: '12px', color: 'rgba(162,178,214,0.82)', marginBottom: '6px', letterSpacing: '0.08em' }}>{title}</div>
+                      <div style={{ lineHeight: 1.7, color: '#eef2ff' }}>{value}</div>
+                    </div>
+                  ))}
                 </div>
               ) : (
-                <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)', lineHeight: 1.7, color: '#5b5348' }}>
-                  填完 creator name、內容類型同平台資料之後，右邊就會開始出第一輪 AI creator snapshot。揀咗付費 plan 後，提交申請會直接帶你去 Stripe。
+                <div style={{ padding: '16px', borderRadius: '18px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', lineHeight: 1.8, color: 'rgba(216,221,235,0.76)' }}>
+                  當你填寫創作者名稱、內容類別與平台資訊後，右側便會開始顯示第一輪 AI 創作者快照。
                 </div>
               )}
             </section>
@@ -491,5 +591,34 @@ export default function ApplyPage() {
         </section>
       </div>
     </main>
+  )
+}
+
+function ListInputGroup({
+  label,
+  values,
+  placeholderPrefix,
+  onChange,
+}: {
+  label: string
+  values: string[]
+  placeholderPrefix: string
+  onChange: (index: number, value: string) => void
+}) {
+  return (
+    <div style={{ display: 'grid', gap: '8px' }}>
+      <div style={labelStyle}>{label}</div>
+      <div style={{ display: 'grid', gap: '10px' }}>
+        {values.map((value, index) => (
+          <input
+            key={`${placeholderPrefix}-${index}`}
+            value={value}
+            onChange={(e) => onChange(index, e.target.value)}
+            placeholder={`${placeholderPrefix} ${index + 1}`}
+            style={inputBaseStyle}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
