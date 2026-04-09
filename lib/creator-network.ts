@@ -197,7 +197,7 @@ export function buildCreatorAiPreview(form: CreatorApplyForm) {
         : categories.includes('lifestyle')
           ? 'Lifestyle Trust Creator'
           : 'Multi-Category Creator',
-    fitObjective: form.hasConversionCampaigns.trim()
+    fitObjective: form.recentConversionCampaigns.some((item) => item.trim())
       ? '適合接 conversion / trust-driven campaigns'
       : '適合先接 awareness / engagement campaigns',
     strength: primaryPlatform === 'instagram'
