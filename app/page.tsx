@@ -33,61 +33,63 @@ export default function HomePage() {
     <>
       <main className="creator-home">
         <section className="hero-shell">
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <div className="eyebrow">SOON CREATOR NETWORK</div>
-              <div className="pill-badge">
-                <span className="pill-badge__new">NEW</span>
-                <span>Creator jobs + AI workflow in one network</span>
-              </div>
-
-              <h1>
-                人人都可以做
-                <br />
-                <span>Content Creator</span>
-              </h1>
-
-              <p className="hero-text">
-                加入 SOON Creator Network，安全接 job、唔怕拖數，仲可以按你需要解鎖題材、script、
-                storyboard 呢套 AI workflow，將創作變成更穩定嘅成長系統。
-              </p>
-
-              <div className="hero-actions">
-                <Link href="/apply" className="primary-cta">
-                  立即加入 Network
-                  <span aria-hidden="true">→</span>
-                </Link>
-                <Link href="/creator-workspace" className="secondary-cta">
-                  Go to Dashboard
-                </Link>
-              </div>
-
-              <div className="hero-foot">
-                <div className="hero-proof">
-                  <span className="hero-proof__title">Built for creator safety</span>
-                  <span className="hero-proof__text">
-                    Job flow、tool access、workspace update 都由同一個 SOON system 承接。
-                  </span>
-                </div>
-                <div className="hero-proof hero-proof--compact">
-                  <span className="hero-proof__title">Flexible plans</span>
-                  <span className="hero-proof__text">由 free pool 到 heavy AI workflow，都可以按你節奏升級。</span>
-                </div>
-              </div>
+          <section className="hero-copy">
+            <div className="eyebrow">SOON CREATOR NETWORK</div>
+            <div className="pill-badge">
+              <span className="pill-badge__new">NEW</span>
+              <span>Creator jobs + AI workflow in one network</span>
             </div>
 
-            <aside className="hero-panel">
-              <div className="panel-kicker">WHY SOON</div>
-              <div className="panel-title">唔止係 creator database，而係一個可擴張嘅創作工作台。</div>
-              <div className="panel-list" id="why-soon">
-                {valueProps.map((item, index) => (
-                  <div key={item} className="panel-item">
-                    <span className="panel-index">0{index + 1}</span>
-                    <p>{item}</p>
-                  </div>
-                ))}
+            <h1>
+              <span className="headline-top">人人都可以做</span>
+              <span className="headline-bottom">Content Creator</span>
+            </h1>
+
+            <p className="hero-text">
+              加入 SOON Creator Network，安全接 job、唔怕拖數，仲可以按你需要解鎖題材、script、
+              storyboard 呢套 AI workflow，將創作變成更穩定嘅成長系統。
+            </p>
+
+            <div className="hero-actions">
+              <Link href="/apply" className="primary-cta">
+                立即加入 Network
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link href="/creator-workspace" className="secondary-cta">
+                Go to Dashboard
+              </Link>
+            </div>
+
+            <div className="hero-foot">
+              <div className="hero-proof">
+                <span className="hero-proof__title">Built for creator safety</span>
+                <span className="hero-proof__text">
+                  Job flow、tool access、workspace update 都由同一個 SOON system 承接。
+                </span>
               </div>
-            </aside>
+              <div className="hero-proof hero-proof--compact">
+                <span className="hero-proof__title">Flexible plans</span>
+                <span className="hero-proof__text">由 free pool 到 heavy AI workflow，都可以按你節奏升級。</span>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section className="section-grid">
+          <div className="why-shell" id="why-soon">
+            <div className="section-heading section-heading--center">
+              <div className="eyebrow">WHY SOON</div>
+              <h2>唔止係 creator database，而係一個可擴張嘅創作工作台。</h2>
+            </div>
+
+            <div className="panel-list">
+              {valueProps.map((item, index) => (
+                <div key={item} className="panel-item">
+                  <span className="panel-index">0{index + 1}</span>
+                  <p>{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -173,15 +175,8 @@ export default function HomePage() {
           padding-top: 52px;
         }
 
-        .hero-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 1.2fr) 0.8fr;
-          gap: 22px;
-          align-items: stretch;
-        }
-
         .hero-copy,
-        .hero-panel,
+        .why-shell,
         .step-card,
         .feature-card,
         .plan-card {
@@ -197,11 +192,12 @@ export default function HomePage() {
 
         .hero-copy {
           border-radius: 40px;
-          padding: 44px;
+          padding: 56px 44px;
+          text-align: center;
         }
 
         .hero-copy::before,
-        .hero-panel::before,
+        .why-shell::before,
         .plan-card::before {
           content: "";
           position: absolute;
@@ -231,6 +227,8 @@ export default function HomePage() {
           background: rgba(255, 255, 255, 0.03);
           color: rgba(237, 241, 255, 0.88);
           font-size: 0.95rem;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .pill-badge__new {
@@ -245,22 +243,33 @@ export default function HomePage() {
 
         h1 {
           margin: 0;
-          max-width: 10ch;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 2px;
           font-size: clamp(4rem, 9vw, 7rem);
-          line-height: 0.9;
-          letter-spacing: -0.085em;
+          line-height: 0.94;
+          letter-spacing: -0.08em;
           font-weight: 300;
           color: #f8faff;
         }
 
-        h1 span {
+        .headline-top,
+        .headline-bottom {
+          display: block;
+        }
+
+        .headline-bottom {
+          white-space: nowrap;
           color: rgba(240, 244, 255, 0.95);
           font-weight: 400;
         }
 
         .hero-text {
-          max-width: 760px;
+          max-width: 780px;
           margin: 26px 0 0;
+          margin-left: auto;
+          margin-right: auto;
           color: rgba(210, 217, 234, 0.78);
           font-size: 1.08rem;
           font-weight: 350;
@@ -271,6 +280,7 @@ export default function HomePage() {
         .hero-actions {
           display: flex;
           flex-wrap: wrap;
+          justify-content: center;
           gap: 14px;
           margin-top: 32px;
         }
@@ -330,6 +340,7 @@ export default function HomePage() {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 14px;
           margin-top: 34px;
+          text-align: left;
         }
 
         .hero-proof {
@@ -355,37 +366,28 @@ export default function HomePage() {
           font-weight: 350;
         }
 
-        .hero-panel {
+        .why-shell {
           border-radius: 34px;
           padding: 32px;
         }
 
-        .panel-kicker {
-          margin-bottom: 16px;
-          color: rgba(162, 178, 214, 0.78);
-          font-size: 0.76rem;
-          letter-spacing: 0.2em;
-        }
-
-        .panel-title {
-          margin-bottom: 26px;
-          font-size: clamp(1.7rem, 3.6vw, 2.5rem);
-          line-height: 1.1;
-          color: #f8faff;
-          letter-spacing: -0.05em;
-          font-weight: 400;
+        .section-heading--center {
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
         }
 
         .panel-list {
           display: grid;
           gap: 14px;
+          margin-top: 22px;
         }
 
         .panel-item {
           display: grid;
-          grid-template-columns: 48px minmax(0, 1fr);
+          grid-template-columns: 64px minmax(0, 1fr);
           gap: 12px;
-          padding: 16px;
+          padding: 18px;
           border-radius: 20px;
           background: rgba(255, 255, 255, 0.035);
           border: 1px solid rgba(255, 255, 255, 0.06);
@@ -395,8 +397,8 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 48px;
-          height: 48px;
+          width: 52px;
+          height: 52px;
           border-radius: 16px;
           background: linear-gradient(135deg, rgba(29, 114, 255, 0.24), rgba(71, 143, 255, 0.14));
           color: #9cc0ff;
@@ -561,19 +563,14 @@ export default function HomePage() {
         }
 
         @media (max-width: 1100px) {
-          .hero-grid,
           .steps-grid,
           .feature-grid,
           .plans-grid {
             grid-template-columns: 1fr;
           }
 
-          h1 {
-            max-width: none;
-          }
-
-          .hero-panel {
-            order: 2;
+          .headline-bottom {
+            white-space: normal;
           }
         }
 
@@ -587,7 +584,7 @@ export default function HomePage() {
           }
 
           .hero-copy,
-          .hero-panel,
+          .why-shell,
           .step-card,
           .feature-card,
           .plan-card {
@@ -599,6 +596,11 @@ export default function HomePage() {
             align-items: flex-start;
             flex-direction: column;
             border-radius: 22px;
+          }
+
+          h1 {
+            gap: 8px;
+            line-height: 0.98;
           }
 
           .hero-text {
@@ -621,6 +623,11 @@ export default function HomePage() {
 
           .panel-item {
             grid-template-columns: 1fr;
+          }
+
+          .panel-index {
+            width: 48px;
+            height: 48px;
           }
         }
       `}</style>

@@ -193,7 +193,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             margin: 0;
             min-height: 100vh;
             font-family:
-              Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+              "SF Pro Rounded", "SF Pro Display", "Avenir Next", ui-rounded,
+              "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont,
               "Segoe UI", sans-serif;
             background:
               radial-gradient(circle at top, rgba(41, 98, 255, 0.22), transparent 28%),
