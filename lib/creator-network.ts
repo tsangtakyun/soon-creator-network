@@ -24,6 +24,7 @@ export type CreatorApplyForm = {
   topContentLinks: string
   analyticsNotes: string
   analyticsDriveLinks: string
+  selectedPlan: string
 }
 
 export const defaultCreatorApplyForm: CreatorApplyForm = {
@@ -52,6 +53,62 @@ export const defaultCreatorApplyForm: CreatorApplyForm = {
   topContentLinks: '',
   analyticsNotes: '',
   analyticsDriveLinks: '',
+  selectedPlan: 'creator-core',
+}
+
+export type CreatorPlan = {
+  id: string
+  name: string
+  monthlyLabel: string
+  subtitle: string
+  description: string
+  features: string[]
+  recommended?: boolean
+}
+
+export function getCreatorPlans(): CreatorPlan[] {
+  return [
+    {
+      id: 'creator-core',
+      name: 'Creator Core',
+      monthlyLabel: 'HK$0 / 月',
+      subtitle: '先加入 SOON creator pool',
+      description: '適合想先安全接 job、入 creator database，同時保留完全自由度嘅 creator。',
+      features: [
+        '進入 SOON creator database',
+        '安全接 job，客戶先付款',
+        '可被配對 client campaign',
+        '基本 creator workspace',
+      ],
+    },
+    {
+      id: 'creator-growth',
+      name: 'Creator Growth',
+      monthlyLabel: 'HK$299 / 月',
+      subtitle: '最適合大部分 creator',
+      description: '除咗接 job，仲可以定期用 SOON internal system 幫你加速出題材、整腳本、做 planning。',
+      features: [
+        '題材庫 access',
+        'Script creation planning',
+        'Storyboard planning access',
+        '優先接 campaign matching',
+      ],
+      recommended: true,
+    },
+    {
+      id: 'creator-studio',
+      name: 'Creator Studio',
+      monthlyLabel: 'HK$699 / 月',
+      subtitle: '重度使用 AI workflow',
+      description: '適合想將 SOON 系統當成自己創作工作台，用埋 AI 生片、深度 workflow 同進階 support。',
+      features: [
+        '題材庫 + script + storyboard 全 access',
+        'AI 生片配額',
+        '優先 creator support',
+        '較進階 campaign workflow tools',
+      ],
+    },
+  ]
 }
 
 export function buildCreatorValueProps() {
@@ -67,6 +124,7 @@ export function buildCreatorAiPreview(form: CreatorApplyForm) {
 
   const categories = form.contentCategories.toLowerCase()
   const primaryPlatform = form.primaryPlatform.toLowerCase()
+  const selectedPlan = getCreatorPlans().find((plan) => plan.id === form.selectedPlan)
 
   return {
     archetype: categories.includes('food')
@@ -89,6 +147,9 @@ export function buildCreatorAiPreview(form: CreatorApplyForm) {
         : categories.includes('lifestyle')
           ? '較適合品牌感、信任感、日常植入類 campaign'
           : '較適合做 multi-angle 測試型 campaign',
+    selectedPlanSummary: selectedPlan
+      ? `${selectedPlan.name} · ${selectedPlan.subtitle}`
+      : '未揀計劃',
   }
 }
 
@@ -121,12 +182,14 @@ export function buildCreatorApplicationPayload(form: CreatorApplyForm) {
     top_content_links: form.topContentLinks.trim(),
     analytics_notes: form.analyticsNotes.trim(),
     analytics_drive_links: form.analyticsDriveLinks.trim(),
+    selected_plan: form.selectedPlan.trim(),
     ai_analysis: preview
       ? {
           archetype: preview.archetype,
           fit_objective: preview.fitObjective,
           strength_summary: preview.strength,
           fit_summary: preview.fitSummary,
+          selected_plan_summary: preview.selectedPlanSummary,
         }
       : {},
   }

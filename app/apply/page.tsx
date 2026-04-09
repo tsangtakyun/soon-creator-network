@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { buildCreatorAiPreview, defaultCreatorApplyForm } from '@/lib/creator-network'
+import { buildCreatorAiPreview, defaultCreatorApplyForm, getCreatorPlans } from '@/lib/creator-network'
 
 export default function ApplyPage() {
   const router = useRouter()
@@ -13,6 +13,7 @@ export default function ApplyPage() {
   const [submitMessage, setSubmitMessage] = useState('')
   const [isPending, startTransition] = useTransition()
   const preview = useMemo(() => buildCreatorAiPreview(form), [form])
+  const plans = useMemo(() => getCreatorPlans(), [])
 
   function updateField(field: keyof typeof defaultCreatorApplyForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -124,6 +125,55 @@ export default function ApplyPage() {
               </div>
             </section>
 
+            <section style={{ padding: '24px', borderRadius: '24px', background: '#121212', color: '#f5efe5', border: '1px solid rgba(26,26,24,0.10)' }}>
+              <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#c7bdaf', marginBottom: '8px' }}>CREATOR PLANS</div>
+              <div style={{ fontSize: '38px', lineHeight: 1.05, marginBottom: '10px' }}>揀你想用嘅 SOON Creator 計劃</div>
+              <div style={{ fontSize: '17px', lineHeight: 1.7, color: '#e8ddcf', marginBottom: '18px', maxWidth: '760px' }}>
+                唔同 level 會影響你可用幾多 internal tools。最基本一定可以安全接 job；之後再按你想用幾多題材庫、script creation、storyboard、AI 生片去揀。
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                {plans.map((plan) => {
+                  const selected = form.selectedPlan === plan.id
+
+                  return (
+                    <button
+                      key={plan.id}
+                      type="button"
+                      onClick={() => updateField('selectedPlan', plan.id)}
+                      style={{
+                        textAlign: 'left',
+                        padding: '20px',
+                        borderRadius: '24px',
+                        border: selected ? '1px solid rgba(255,255,255,0.72)' : '1px solid rgba(255,255,255,0.12)',
+                        background: selected ? 'linear-gradient(180deg, rgba(47,64,86,0.92) 0%, rgba(18,18,18,0.96) 100%)' : 'rgba(255,255,255,0.04)',
+                        color: '#f5efe5',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
+                        <div style={{ fontSize: '28px', lineHeight: 1.05 }}>{plan.name}</div>
+                        {plan.recommended ? (
+                          <span style={{ borderRadius: '999px', background: 'rgba(245,239,229,0.12)', padding: '6px 10px', fontSize: '11px', letterSpacing: '0.12em' }}>
+                            RECOMMENDED
+                          </span>
+                        ) : null}
+                      </div>
+                      <div style={{ fontSize: '40px', lineHeight: 1, marginBottom: '8px' }}>{plan.monthlyLabel}</div>
+                      <div style={{ color: '#d9cfbf', marginBottom: '12px', lineHeight: 1.6 }}>{plan.subtitle}</div>
+                      <div style={{ color: '#c7bdaf', lineHeight: 1.7, marginBottom: '14px' }}>{plan.description}</div>
+                      <div style={{ display: 'grid', gap: '8px' }}>
+                        {plan.features.map((feature) => (
+                          <div key={feature} style={{ fontSize: '14px', lineHeight: 1.6 }}>
+                            ✓ {feature}
+                          </div>
+                        ))}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+
             <section style={{ padding: '26px', borderRadius: '24px', background: '#1a1a18', color: '#f5efe5', border: '1px solid rgba(26,26,24,0.10)' }}>
               <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#c7bdaf', marginBottom: '10px' }}>NEXT STEP</div>
               <div style={{ fontSize: '34px', lineHeight: 1.08, marginBottom: '12px' }}>提交後，SOON 會用 AI 幫你做第一輪 creator analysis。</div>
@@ -177,6 +227,10 @@ export default function ApplyPage() {
                   <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
                     <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>AI Fit Summary</div>
                     <div style={{ lineHeight: 1.7 }}>{preview.fitSummary}</div>
+                  </div>
+                  <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
+                    <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>Selected Plan</div>
+                    <div style={{ lineHeight: 1.7 }}>{preview.selectedPlanSummary}</div>
                   </div>
                 </div>
               ) : (

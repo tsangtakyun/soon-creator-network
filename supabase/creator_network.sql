@@ -27,6 +27,7 @@ create table if not exists public.creator_applications (
   top_content_links text not null default '',
   analytics_notes text not null default '',
   analytics_drive_links text not null default '',
+  selected_plan text not null default 'creator-core',
   ai_analysis jsonb not null default '{}'::jsonb,
   review_status text not null default 'new',
   internal_notes text not null default '',

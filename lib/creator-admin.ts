@@ -27,6 +27,7 @@ export type CreatorApplicationRecord = {
   top_content_links: string
   analytics_notes: string
   analytics_drive_links: string
+  selected_plan: string
   ai_analysis: {
     archetype?: string
     fit_objective?: string

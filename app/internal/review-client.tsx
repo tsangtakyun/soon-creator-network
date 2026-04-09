@@ -130,6 +130,7 @@ export default function InternalReviewClientPage({ initialApplications }: Review
                       ['Location', application.location],
                       ['Primary Platform', application.primary_platform],
                       ['Content Categories', application.content_categories],
+                      ['Selected Plan', application.selected_plan],
                       ['Usual Reel Rate', application.usual_reel_rate],
                     ].map(([label, value]) => (
                       <div key={label} style={{ padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
