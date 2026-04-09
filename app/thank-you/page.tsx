@@ -1,9 +1,10 @@
 import Link from 'next/link'
+import ThankYouClient from '@/app/thank-you/client'
 
 export default async function ThankYouPage({
   searchParams,
 }: {
-  searchParams: Promise<{ id?: string }>
+  searchParams: Promise<{ id?: string; payment?: string; plan?: string; session_id?: string }>
 }) {
   const params = await searchParams
 
@@ -15,6 +16,12 @@ export default async function ThankYouPage({
         <p style={{ margin: '0 0 18px', fontSize: '18px', lineHeight: 1.7, color: '#5b5348' }}>
           第一版 MVP 已經收到你嘅 creator 申請。之後 SOON 會用 AI 幫你做第一輪 creator analysis，再由 internal team review，將你放入未來 client campaign matching database。
         </p>
+        <ThankYouClient
+          applicationId={params.id}
+          payment={params.payment}
+          plan={params.plan}
+          sessionId={params.session_id}
+        />
         {params.id ? (
           <div style={{ margin: '0 0 18px', padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)', lineHeight: 1.7, color: '#5b5348' }}>
             申請 reference：<span style={{ color: '#1a1a18' }}>{params.id}</span>

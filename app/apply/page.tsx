@@ -14,6 +14,7 @@ import {
   creatorRateRangeOptions,
   defaultCreatorApplyForm,
   getCreatorPlans,
+  isPaidCreatorPlan,
 } from '@/lib/creator-network'
 
 export default function ApplyPage() {
@@ -73,6 +74,36 @@ export default function ApplyPage() {
 
         if (!response.ok) {
           throw new Error(result.error || '提交申請失敗，請稍後再試。')
+        }
+
+        if (isPaidCreatorPlan(form.selectedPlan)) {
+          setSubmitMessage('已收到申請，正在建立 Stripe 付款流程...')
+
+          const checkoutResponse = await fetch('/api/creator-plan/create-checkout-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              applicationId: result.id,
+              email: form.email,
+              selectedPlan: form.selectedPlan,
+            }),
+          })
+
+          const checkoutResult = await checkoutResponse.json()
+
+          if (!checkoutResponse.ok) {
+            throw new Error(checkoutResult.error || '未能建立付款流程。')
+          }
+
+          if (!checkoutResult.url) {
+            throw new Error('未收到 Stripe checkout URL。')
+          }
+
+          setSubmitMessage('即將跳去 Stripe 付款頁...')
+          window.location.href = checkoutResult.url
+          return
         }
 
         setSubmitMessage('已收到申請，準備跳去確認頁...')
@@ -452,7 +483,7 @@ export default function ApplyPage() {
                 </div>
               ) : (
                 <div style={{ padding: '16px', borderRadius: '18px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)', lineHeight: 1.7, color: '#5b5348' }}>
-                  填完 creator name、內容類型同平台資料之後，右邊就會開始出第一輪 AI creator snapshot。
+                  填完 creator name、內容類型同平台資料之後，右邊就會開始出第一輪 AI creator snapshot。揀咗付費 plan 後，提交申請會直接帶你去 Stripe。
                 </div>
               )}
             </section>

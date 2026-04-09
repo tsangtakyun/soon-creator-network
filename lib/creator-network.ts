@@ -174,6 +174,10 @@ export function getCreatorPlans(): CreatorPlan[] {
   ]
 }
 
+export function isPaidCreatorPlan(planId: string) {
+  return planId === 'creator-growth' || planId === 'creator-studio'
+}
+
 export function buildCreatorValueProps() {
   return [
     '所有 job 經 SOON system 跑，客戶先付款，你唔使驚拖數。',

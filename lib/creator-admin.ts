@@ -30,6 +30,10 @@ export type CreatorApplicationRecord = {
   analytics_notes: string
   analytics_drive_links: string
   selected_plan: string
+  plan_payment_status: string
+  plan_payment_session_id: string
+  stripe_customer_email: string
+  plan_paid_at: string | null
   ai_analysis: {
     archetype?: string
     fit_objective?: string

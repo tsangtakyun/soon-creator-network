@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json({ id: data.id }, { status: 200 })
+    return NextResponse.json({ id: data.id, selectedPlan: payload.selected_plan }, { status: 200 })
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : '提交申請失敗。' },

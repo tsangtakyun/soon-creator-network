@@ -131,6 +131,7 @@ export default function InternalReviewClientPage({ initialApplications }: Review
                       ['Primary Platform', application.primary_platform],
                       ['Content Categories', application.content_categories],
                       ['Selected Plan', application.selected_plan],
+                      ['Plan Payment', application.plan_payment_status || '未需要'],
                       ['Reel / Post / Story', `${application.usual_reel_rate || '未填'} / ${application.usual_post_rate || '未填'} / ${application.usual_story_rate || '未填'}`],
                     ].map(([label, value]) => (
                       <div key={label} style={{ padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>

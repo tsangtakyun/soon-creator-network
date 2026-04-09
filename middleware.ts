@@ -15,7 +15,8 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname === '/thank-you' ||
     request.nextUrl.pathname === '/login' ||
     request.nextUrl.pathname.startsWith('/auth') ||
-    request.nextUrl.pathname.startsWith('/api/creator-apply')
+    request.nextUrl.pathname.startsWith('/api/creator-apply') ||
+    request.nextUrl.pathname.startsWith('/api/creator-plan')
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
