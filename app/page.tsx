@@ -328,6 +328,8 @@ export default function HomePage() {
           min-width: 210px;
           min-height: 60px;
           padding: 0 30px;
+          font-size: 1.04rem;
+          border-radius: 999px;
         }
 
         .secondary-cta--hero,
@@ -337,6 +339,16 @@ export default function HomePage() {
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.05),
             0 14px 34px rgba(0, 0, 0, 0.2);
+        }
+
+        .secondary-cta--hero {
+          color: #f4f7ff;
+        }
+
+        .primary-cta--hero {
+          box-shadow:
+            0 0 0 1px rgba(142, 180, 255, 0.24),
+            0 0 44px rgba(27, 114, 255, 0.42);
         }
 
         .plan-cta--primary {
