@@ -134,8 +134,23 @@ export type CreatorToolAccess = {
   slug: string
   description: string
   quotaLabel: string
+  creditCostLabel?: string
   unlocked: boolean
   statusLabel: string
+}
+
+export function getCreatorMonthlyCredits(planId: string, paymentStatus: string) {
+  const paidActive = !isPaidCreatorPlan(planId) || paymentStatus === 'paid'
+
+  if (planId === 'creator-growth') {
+    return paidActive ? 6 : 0
+  }
+
+  if (planId === 'creator-studio') {
+    return paidActive ? 30 : 0
+  }
+
+  return 0
 }
 
 export function getCreatorPlans(): CreatorPlan[] {
@@ -200,7 +215,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: '題材庫',
         slug: 'idea-library',
         description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
-        quotaLabel: '每月 2 次',
+        quotaLabel: '每月 6 credits',
+        creditCostLabel: '每次使用扣 1 credit',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },
@@ -208,7 +224,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: 'Script Creation',
         slug: 'script-creation',
         description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
-        quotaLabel: '每月 2 次',
+        quotaLabel: '每月 6 credits',
+        creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },
@@ -216,7 +233,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: 'Storyboard',
         slug: 'storyboard',
         description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
-        quotaLabel: '每月 2 次',
+        quotaLabel: '每月 6 credits',
+        creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },
@@ -237,7 +255,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: '題材庫',
         slug: 'idea-library',
         description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
-        quotaLabel: '每月 20 次',
+        quotaLabel: '每月 30 credits',
+        creditCostLabel: '每次使用扣 1 credit',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },
@@ -245,7 +264,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: 'Script Creation',
         slug: 'script-creation',
         description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
-        quotaLabel: '每月 20 次',
+        quotaLabel: '每月 30 credits',
+        creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },
@@ -253,7 +273,8 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         title: 'Storyboard',
         slug: 'storyboard',
         description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
-        quotaLabel: '每月 20 次',
+        quotaLabel: '每月 30 credits',
+        creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
       },

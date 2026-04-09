@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import CreatorPlanPaymentButton from '@/app/creator-workspace/payment-button'
 import { listCreatorApplicationsByEmail } from '@/lib/creator-admin'
-import { buildCreatorToolAccess, getCreatorPlanById, isPaidCreatorPlan } from '@/lib/creator-network'
+import { buildCreatorToolAccess, getCreatorMonthlyCredits, getCreatorPlanById, isPaidCreatorPlan } from '@/lib/creator-network'
 import { createServerSupabase } from '@/lib/server-supabase'
 
 export default async function CreatorWorkspacePage() {
@@ -17,6 +17,7 @@ export default async function CreatorWorkspacePage() {
   const paymentStatus = latestApplication?.plan_payment_status || (selectedPlan === 'creator-core' ? 'not_required' : 'pending')
   const selectedPlanMeta = getCreatorPlanById(selectedPlan)
   const tools = buildCreatorToolAccess(selectedPlan, paymentStatus)
+  const monthlyCredits = getCreatorMonthlyCredits(selectedPlan, paymentStatus)
   const needsPayment = latestApplication && isPaidCreatorPlan(selectedPlan) && paymentStatus !== 'paid'
 
   return (
@@ -44,6 +45,9 @@ export default async function CreatorWorkspacePage() {
                 </div>
                 <div style={{ padding: '10px 14px', borderRadius: '999px', background: 'rgba(255,255,255,0.08)' }}>
                   Review: {latestApplication.review_status || 'new'}
+                </div>
+                <div style={{ padding: '10px 14px', borderRadius: '999px', background: 'rgba(255,255,255,0.08)' }}>
+                  Credits: {monthlyCredits} / month
                 </div>
               </div>
               {needsPayment ? (
@@ -85,6 +89,7 @@ export default async function CreatorWorkspacePage() {
               </div>
               <div style={{ color: '#5b5348', lineHeight: 1.7 }}>{tool.description}</div>
               <div style={{ color: '#1a1a18' }}>{tool.quotaLabel}</div>
+              {tool.creditCostLabel ? <div style={{ color: '#8b7c69', fontSize: '14px' }}>{tool.creditCostLabel}</div> : null}
               {tool.unlocked ? (
                 <Link href={`/tools/${tool.slug}`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#1a1a18', color: '#f5efe5', padding: '12px 16px', textDecoration: 'none' }}>
                   進入
