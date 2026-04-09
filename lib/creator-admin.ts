@@ -1,4 +1,5 @@
 import { createAdminSupabase } from '@/lib/server-supabase'
+import { buildCreatorToolAccess, getCreatorMonthlyCredits } from '@/lib/creator-network'
 
 export type CreatorApplicationRecord = {
   id: string
@@ -46,6 +47,26 @@ export type CreatorApplicationRecord = {
   created_at: string
 }
 
+export type CreatorUsageLedgerRecord = {
+  id: string
+  application_id: string
+  tool_slug: string
+  credits_used: number
+  metadata: Record<string, unknown> | null
+  created_at: string
+}
+
+function getCurrentMonthRange() {
+  const now = new Date()
+  const start = new Date(now.getFullYear(), now.getMonth(), 1)
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+
+  return {
+    startIso: start.toISOString(),
+    endIso: end.toISOString(),
+  }
+}
+
 export async function listCreatorApplications() {
   const supabase = createAdminSupabase()
   const { data, error } = await supabase
@@ -89,4 +110,64 @@ export async function listCreatorApplicationsByEmail(email: string) {
   }
 
   return (data ?? []) as CreatorApplicationRecord[]
+}
+
+export async function listCreatorUsageLedger(applicationId: string) {
+  const supabase = createAdminSupabase()
+  const { startIso, endIso } = getCurrentMonthRange()
+  const { data, error } = await supabase
+    .from('creator_usage_ledger')
+    .select('*')
+    .eq('application_id', applicationId)
+    .gte('created_at', startIso)
+    .lt('created_at', endIso)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []) as CreatorUsageLedgerRecord[]
+}
+
+export async function getCreatorCreditSummary(application: CreatorApplicationRecord | undefined) {
+  if (!application) {
+    return {
+      allowance: 0,
+      used: 0,
+      remaining: 0,
+      ledger: [] as CreatorUsageLedgerRecord[],
+    }
+  }
+
+  const allowance = getCreatorMonthlyCredits(application.selected_plan, application.plan_payment_status)
+  const ledger = await listCreatorUsageLedger(application.id)
+  const used = ledger.reduce((sum, item) => sum + Number(item.credits_used || 0), 0)
+
+  return {
+    allowance,
+    used,
+    remaining: Math.max(allowance - used, 0),
+    ledger,
+  }
+}
+
+export function getCreatorToolAccessWithBalance(
+  application: CreatorApplicationRecord | undefined,
+  remainingCredits: number
+) {
+  const baseTools = buildCreatorToolAccess(
+    application?.selected_plan || 'creator-core',
+    application?.plan_payment_status || 'not_required'
+  )
+
+  return baseTools.map((tool) => ({
+    ...tool,
+    unlocked: tool.unlocked && remainingCredits >= tool.creditCost,
+    statusLabel: !tool.unlocked
+      ? tool.statusLabel
+      : remainingCredits >= tool.creditCost
+        ? tool.statusLabel
+        : 'Credits 不足',
+  }))
 }

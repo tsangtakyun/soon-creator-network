@@ -50,3 +50,14 @@ on public.creator_applications
 for insert
 to anon, authenticated
 with check (true);
+
+create table if not exists public.creator_usage_ledger (
+  id uuid primary key default gen_random_uuid(),
+  application_id uuid not null references public.creator_applications(id) on delete cascade,
+  tool_slug text not null default '',
+  credits_used integer not null default 0,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+alter table public.creator_usage_ledger enable row level security;

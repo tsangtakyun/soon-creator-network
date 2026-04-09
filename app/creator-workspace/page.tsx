@@ -2,8 +2,8 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import CreatorPlanPaymentButton from '@/app/creator-workspace/payment-button'
-import { listCreatorApplicationsByEmail } from '@/lib/creator-admin'
-import { buildCreatorToolAccess, getCreatorMonthlyCredits, getCreatorPlanById, isPaidCreatorPlan } from '@/lib/creator-network'
+import { getCreatorCreditSummary, getCreatorToolAccessWithBalance, listCreatorApplicationsByEmail } from '@/lib/creator-admin'
+import { getCreatorPlanById, isPaidCreatorPlan } from '@/lib/creator-network'
 import { createServerSupabase } from '@/lib/server-supabase'
 
 export default async function CreatorWorkspacePage() {
@@ -16,8 +16,8 @@ export default async function CreatorWorkspacePage() {
   const selectedPlan = latestApplication?.selected_plan || 'creator-core'
   const paymentStatus = latestApplication?.plan_payment_status || (selectedPlan === 'creator-core' ? 'not_required' : 'pending')
   const selectedPlanMeta = getCreatorPlanById(selectedPlan)
-  const tools = buildCreatorToolAccess(selectedPlan, paymentStatus)
-  const monthlyCredits = getCreatorMonthlyCredits(selectedPlan, paymentStatus)
+  const creditSummary = await getCreatorCreditSummary(latestApplication)
+  const tools = getCreatorToolAccessWithBalance(latestApplication, creditSummary.remaining)
   const needsPayment = latestApplication && isPaidCreatorPlan(selectedPlan) && paymentStatus !== 'paid'
 
   return (
@@ -47,7 +47,7 @@ export default async function CreatorWorkspacePage() {
                   Review: {latestApplication.review_status || 'new'}
                 </div>
                 <div style={{ padding: '10px 14px', borderRadius: '999px', background: 'rgba(255,255,255,0.08)' }}>
-                  Credits: {monthlyCredits} / month
+                  Credits: {creditSummary.remaining} / {creditSummary.allowance}
                 </div>
               </div>
               {needsPayment ? (
@@ -115,6 +115,16 @@ export default async function CreatorWorkspacePage() {
               email={latestApplication.email}
               selectedPlan={selectedPlan}
             />
+          </section>
+        ) : null}
+
+        {latestApplication ? (
+          <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)', display: 'grid', gap: '10px' }}>
+            <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69' }}>CREDIT LEDGER</div>
+            <div style={{ fontSize: '30px', lineHeight: 1.08 }}>本月已用 {creditSummary.used} credits，剩餘 {creditSummary.remaining} credits</div>
+            <div style={{ color: '#5b5348', lineHeight: 1.7 }}>
+              第一版 credit ledger 已開始記錄每次工具使用。之後再補 monthly refill、加購 credits 同更細 usage analytics。
+            </div>
           </section>
         ) : null}
       </div>

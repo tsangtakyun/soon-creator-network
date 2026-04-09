@@ -134,9 +134,20 @@ export type CreatorToolAccess = {
   slug: string
   description: string
   quotaLabel: string
+  creditCost: number
   creditCostLabel?: string
   unlocked: boolean
   statusLabel: string
+}
+
+export function getCreatorToolDestination(toolSlug: string) {
+  const destinations: Record<string, string> = {
+    'idea-library': 'https://idea-brainstorm.vercel.app',
+    'script-creation': 'https://script-generator-xi.vercel.app',
+    storyboard: 'https://soon-storyboard.vercel.app',
+  }
+
+  return destinations[toolSlug] ?? ''
 }
 
 export function getCreatorMonthlyCredits(planId: string, paymentStatus: string) {
@@ -219,6 +230,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'idea-library',
         description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
         quotaLabel: '每月 6 credits',
+        creditCost: 1,
         creditCostLabel: '每次使用扣 1 credit',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -228,6 +240,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'script-creation',
         description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
         quotaLabel: '每月 6 credits',
+        creditCost: 2,
         creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -237,6 +250,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'storyboard',
         description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
         quotaLabel: '每月 6 credits',
+        creditCost: 2,
         creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -246,6 +260,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'ai-video',
         description: 'AI 生片功能之後會再開放到 creator plans。',
         quotaLabel: '暫未開放',
+        creditCost: 0,
         unlocked: false,
         statusLabel: 'Locked',
       },
@@ -259,6 +274,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'idea-library',
         description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
         quotaLabel: '每月 30 credits',
+        creditCost: 1,
         creditCostLabel: '每次使用扣 1 credit',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -268,6 +284,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'script-creation',
         description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
         quotaLabel: '每月 30 credits',
+        creditCost: 2,
         creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -277,6 +294,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'storyboard',
         description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
         quotaLabel: '每月 30 credits',
+        creditCost: 2,
         creditCostLabel: '每次使用扣 2 credits',
         unlocked: paidActive,
         statusLabel: paidActive ? '已開通' : '等待付款',
@@ -286,6 +304,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
         slug: 'ai-video',
         description: 'AI 生片功能會之後再按 creator plan 分批開放。',
         quotaLabel: '暫未開放',
+        creditCost: 0,
         unlocked: false,
         statusLabel: 'Locked',
       },
@@ -298,6 +317,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
       slug: 'idea-library',
       description: '加入更高 creator plan 後先會開放。',
       quotaLabel: '未開通',
+      creditCost: 0,
       unlocked: false,
       statusLabel: 'Locked',
     },
@@ -306,6 +326,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
       slug: 'script-creation',
       description: '加入更高 creator plan 後先會開放。',
       quotaLabel: '未開通',
+      creditCost: 0,
       unlocked: false,
       statusLabel: 'Locked',
     },
@@ -314,6 +335,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
       slug: 'storyboard',
       description: '加入更高 creator plan 後先會開放。',
       quotaLabel: '未開通',
+      creditCost: 0,
       unlocked: false,
       statusLabel: 'Locked',
     },
@@ -322,6 +344,7 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
       slug: 'ai-video',
       description: 'AI 生片功能之後再按 plan 開放。',
       quotaLabel: '未開通',
+      creditCost: 0,
       unlocked: false,
       statusLabel: 'Locked',
     },

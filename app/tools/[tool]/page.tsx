@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-import { listCreatorApplicationsByEmail } from '@/lib/creator-admin'
-import { buildCreatorToolAccess, getCreatorMonthlyCredits } from '@/lib/creator-network'
+import CreatorToolUseButton from '@/app/tools/[tool]/use-button'
+import { getCreatorCreditSummary, getCreatorToolAccessWithBalance, listCreatorApplicationsByEmail } from '@/lib/creator-admin'
 import { createServerSupabase } from '@/lib/server-supabase'
 
 const toolCopy: Record<string, { title: string; body: string }> = {
@@ -24,21 +24,6 @@ const toolCopy: Record<string, { title: string; body: string }> = {
   },
 }
 
-const internalToolLinks: Record<string, { label: string; href: string }> = {
-  'idea-library': {
-    label: '前往 SOON 題材庫',
-    href: 'https://idea-brainstorm.vercel.app',
-  },
-  'script-creation': {
-    label: '前往 SOON Script Generator',
-    href: 'https://script-generator-xi.vercel.app',
-  },
-  'storyboard': {
-    label: '前往 SOON Storyboard',
-    href: 'https://soon-storyboard.vercel.app',
-  },
-}
-
 export default async function CreatorToolPage({
   params,
 }: {
@@ -51,15 +36,11 @@ export default async function CreatorToolPage({
   const email = user?.email?.toLowerCase() ?? ''
   const applications = email ? await listCreatorApplicationsByEmail(email) : []
   const latestApplication = applications[0]
-  const monthlyCredits = getCreatorMonthlyCredits(
-    latestApplication?.selected_plan || 'creator-core',
-    latestApplication?.plan_payment_status || 'not_required'
-  )
-  const access = buildCreatorToolAccess(
-    latestApplication?.selected_plan || 'creator-core',
-    latestApplication?.plan_payment_status || 'not_required'
+  const creditSummary = await getCreatorCreditSummary(latestApplication)
+  const access = getCreatorToolAccessWithBalance(
+    latestApplication,
+    creditSummary.remaining
   ).find((item) => item.slug === tool)
-  const internalLink = internalToolLinks[tool]
 
   const copy = toolCopy[tool] ?? {
     title: 'Creator Tool',
@@ -87,19 +68,10 @@ export default async function CreatorToolPage({
           </div>
           {access?.unlocked && access.creditCostLabel ? (
             <div style={{ marginBottom: '14px', padding: '14px 16px', borderRadius: '16px', background: 'rgba(255,255,255,0.08)', lineHeight: 1.7, color: '#e8ddcf' }}>
-              你目前 plan 每月有 {monthlyCredits} credits。{access.creditCostLabel}
+              你目前 plan 本月剩餘 {creditSummary.remaining} / {creditSummary.allowance} credits。{access.creditCostLabel}
             </div>
           ) : null}
-          {access?.unlocked && internalLink ? (
-            <a
-              href={internalLink.href}
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#f5efe5', color: '#1a1a18', padding: '12px 16px', textDecoration: 'none', marginRight: '10px' }}
-            >
-              {internalLink.label}
-            </a>
-          ) : null}
+          {access?.unlocked ? <CreatorToolUseButton toolSlug={tool} creditCost={access.creditCost} /> : null}
           <Link href="/creator-workspace" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: access?.unlocked ? '#f5efe5' : '#1a1a18', color: access?.unlocked ? '#1a1a18' : '#f5efe5', padding: '12px 16px', textDecoration: 'none' }}>
             返回 Creator Dashboard
           </Link>
