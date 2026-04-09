@@ -129,6 +129,15 @@ export type CreatorPlan = {
   recommended?: boolean
 }
 
+export type CreatorToolAccess = {
+  title: string
+  slug: string
+  description: string
+  quotaLabel: string
+  unlocked: boolean
+  statusLabel: string
+}
+
 export function getCreatorPlans(): CreatorPlan[] {
   return [
     {
@@ -176,6 +185,123 @@ export function getCreatorPlans(): CreatorPlan[] {
 
 export function isPaidCreatorPlan(planId: string) {
   return planId === 'creator-growth' || planId === 'creator-studio'
+}
+
+export function getCreatorPlanById(planId: string) {
+  return getCreatorPlans().find((plan) => plan.id === planId) ?? getCreatorPlans()[0]
+}
+
+export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
+  const paidActive = !isPaidCreatorPlan(planId) || paymentStatus === 'paid'
+
+  if (planId === 'creator-growth') {
+    return [
+      {
+        title: '題材庫',
+        slug: 'idea-library',
+        description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
+        quotaLabel: '每月 2 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'Script Creation',
+        slug: 'script-creation',
+        description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
+        quotaLabel: '每月 2 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'Storyboard',
+        slug: 'storyboard',
+        description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
+        quotaLabel: '每月 2 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'AI 生成影片',
+        slug: 'ai-video',
+        description: 'AI 生片功能之後會再開放到 creator plans。',
+        quotaLabel: '暫未開放',
+        unlocked: false,
+        statusLabel: 'Locked',
+      },
+    ] satisfies CreatorToolAccess[]
+  }
+
+  if (planId === 'creator-studio') {
+    return [
+      {
+        title: '題材庫',
+        slug: 'idea-library',
+        description: '從 SOON 題材庫搵啱你風格、啱你 audience 嘅內容方向。',
+        quotaLabel: '每月 20 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'Script Creation',
+        slug: 'script-creation',
+        description: '根據你嘅 creator style 同 campaign 方向，生成第一輪腳本規劃。',
+        quotaLabel: '每月 20 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'Storyboard',
+        slug: 'storyboard',
+        description: '將內容進一步拆成鏡頭結構、拍攝方向同 must-have shots。',
+        quotaLabel: '每月 20 次',
+        unlocked: paidActive,
+        statusLabel: paidActive ? '已開通' : '等待付款',
+      },
+      {
+        title: 'AI 生成影片',
+        slug: 'ai-video',
+        description: 'AI 生片功能會之後再按 creator plan 分批開放。',
+        quotaLabel: '暫未開放',
+        unlocked: false,
+        statusLabel: 'Locked',
+      },
+    ] satisfies CreatorToolAccess[]
+  }
+
+  return [
+    {
+      title: '題材庫',
+      slug: 'idea-library',
+      description: '加入更高 creator plan 後先會開放。',
+      quotaLabel: '未開通',
+      unlocked: false,
+      statusLabel: 'Locked',
+    },
+    {
+      title: 'Script Creation',
+      slug: 'script-creation',
+      description: '加入更高 creator plan 後先會開放。',
+      quotaLabel: '未開通',
+      unlocked: false,
+      statusLabel: 'Locked',
+    },
+    {
+      title: 'Storyboard',
+      slug: 'storyboard',
+      description: '加入更高 creator plan 後先會開放。',
+      quotaLabel: '未開通',
+      unlocked: false,
+      statusLabel: 'Locked',
+    },
+    {
+      title: 'AI 生成影片',
+      slug: 'ai-video',
+      description: 'AI 生片功能之後再按 plan 開放。',
+      quotaLabel: '未開通',
+      unlocked: false,
+      statusLabel: 'Locked',
+    },
+  ] satisfies CreatorToolAccess[]
 }
 
 export function buildCreatorValueProps() {

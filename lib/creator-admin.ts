@@ -74,3 +74,19 @@ export async function listApprovedCreators() {
 
   return (data ?? []) as CreatorApplicationRecord[]
 }
+
+export async function listCreatorApplicationsByEmail(email: string) {
+  const normalizedEmail = email.trim().toLowerCase()
+  const supabase = createAdminSupabase()
+  const { data, error } = await supabase
+    .from('creator_applications')
+    .select('*')
+    .or(`email.eq.${normalizedEmail},stripe_customer_email.eq.${normalizedEmail}`)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []) as CreatorApplicationRecord[]
+}
