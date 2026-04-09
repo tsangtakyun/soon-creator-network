@@ -24,7 +24,7 @@ export default async function ApprovedCreatorDatabasePage() {
                 <div><strong>Platform:</strong> {creator.primary_platform || '未填'}</div>
                 <div><strong>Category:</strong> {creator.content_categories || '未填'}</div>
                 <div><strong>Plan:</strong> {creator.selected_plan || '未填'}</div>
-                <div><strong>Rate:</strong> {creator.usual_reel_rate || '未填'}</div>
+                <div><strong>Rate:</strong> {creator.usual_reel_rate || '未填'} / {creator.usual_post_rate || '未填'} / {creator.usual_story_rate || '未填'}</div>
                 <div><strong>Regions:</strong> {creator.available_regions || creator.audience_regions || '未填'}</div>
               </div>
               <div style={{ marginTop: '14px', padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)', color: '#5b5348', lineHeight: 1.7 }}>

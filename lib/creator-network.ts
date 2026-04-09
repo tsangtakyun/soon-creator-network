@@ -3,8 +3,8 @@ export type CreatorApplyForm = {
   contactName: string
   email: string
   whatsapp: string
-  location: string
-  languages: string
+  country: string
+  languages: string[]
   primaryPlatform: string
   instagramUrl: string
   tiktokUrl: string
@@ -12,18 +12,17 @@ export type CreatorApplyForm = {
   threadsUrl: string
   xiaohongshuUrl: string
   otherLinks: string
-  contentCategories: string
-  contentFormats: string
-  audienceRegions: string
-  audienceAgeGroups: string
-  hasBrandCollabs: string
-  hasConversionCampaigns: string
+  contentCategories: string[]
+  contentFormats: string[]
+  audienceInsightLinks: string[]
+  recentBrandCollabs: string[]
+  recentConversionCampaigns: string[]
   usualReelRate: string
-  availableRegions: string
+  usualPostRate: string
+  usualStoryRate: string
+  availableRegions: string[]
   turnaroundDays: string
-  topContentLinks: string
-  analyticsNotes: string
-  analyticsDriveLinks: string
+  topContentLinks: string[]
   selectedPlan: string
 }
 
@@ -32,8 +31,8 @@ export const defaultCreatorApplyForm: CreatorApplyForm = {
   contactName: '',
   email: '',
   whatsapp: '',
-  location: '',
-  languages: '',
+  country: 'Hong Kong',
+  languages: ['Cantonese'],
   primaryPlatform: 'instagram',
   instagramUrl: '',
   tiktokUrl: '',
@@ -41,20 +40,84 @@ export const defaultCreatorApplyForm: CreatorApplyForm = {
   threadsUrl: '',
   xiaohongshuUrl: '',
   otherLinks: '',
-  contentCategories: '',
-  contentFormats: '',
-  audienceRegions: '',
-  audienceAgeGroups: '',
-  hasBrandCollabs: '',
-  hasConversionCampaigns: '',
+  contentCategories: [],
+  contentFormats: [],
+  audienceInsightLinks: ['', '', ''],
+  recentBrandCollabs: ['', '', '', '', ''],
+  recentConversionCampaigns: ['', '', '', '', ''],
   usualReelRate: '',
-  availableRegions: '',
+  usualPostRate: '',
+  usualStoryRate: '',
+  availableRegions: ['Hong Kong'],
   turnaroundDays: '',
-  topContentLinks: '',
-  analyticsNotes: '',
-  analyticsDriveLinks: '',
+  topContentLinks: ['', '', ''],
   selectedPlan: 'creator-core',
 }
+
+export const creatorCountryOptions = [
+  'Hong Kong',
+  'United Kingdom',
+  'United States',
+  'Taiwan',
+  'Japan',
+  'Korea',
+  'Singapore',
+  'Malaysia',
+  'China',
+  'Macau',
+]
+
+export const creatorLanguageOptions = [
+  'Cantonese',
+  'English',
+  'Mandarin',
+  'Japanese',
+  'Korean',
+]
+
+export const creatorContentCategoryOptions = [
+  'food',
+  'travel',
+  'lifestyle',
+  'beauty',
+  'fitness',
+  'tech',
+  'couple',
+  'family',
+  'fashion',
+  'comedy',
+]
+
+export const creatorContentFormatOptions = [
+  'reel',
+  'story',
+  'post',
+  'vlog',
+  'talking head',
+  'voice-over',
+  'interview',
+  'tutorial',
+]
+
+export const creatorAvailableRegionOptions = [
+  'Hong Kong',
+  'Kowloon',
+  'New Territories',
+  'Macau',
+  'Shenzhen',
+  'Guangzhou',
+  'London',
+  'UK-wide',
+]
+
+export const creatorRateRangeOptions = [
+  'HK$1,000 - 3,000',
+  'HK$3,000 - 5,000',
+  'HK$5,000 - 8,000',
+  'HK$8,000 - 12,000',
+  'HK$12,000 - 20,000',
+  'HK$20,000+',
+]
 
 export type CreatorPlan = {
   id: string
@@ -122,7 +185,7 @@ export function buildCreatorValueProps() {
 export function buildCreatorAiPreview(form: CreatorApplyForm) {
   if (!form.creatorName.trim()) return null
 
-  const categories = form.contentCategories.toLowerCase()
+  const categories = form.contentCategories.join(' ').toLowerCase()
   const primaryPlatform = form.primaryPlatform.toLowerCase()
   const selectedPlan = getCreatorPlans().find((plan) => plan.id === form.selectedPlan)
 
@@ -161,8 +224,8 @@ export function buildCreatorApplicationPayload(form: CreatorApplyForm) {
     contact_name: form.contactName.trim(),
     email: form.email.trim().toLowerCase(),
     whatsapp: form.whatsapp.trim(),
-    location: form.location.trim(),
-    languages: form.languages.trim(),
+    location: form.country.trim(),
+    languages: form.languages.join(', '),
     primary_platform: form.primaryPlatform.trim(),
     instagram_url: form.instagramUrl.trim(),
     tiktok_url: form.tiktokUrl.trim(),
@@ -170,18 +233,20 @@ export function buildCreatorApplicationPayload(form: CreatorApplyForm) {
     threads_url: form.threadsUrl.trim(),
     xiaohongshu_url: form.xiaohongshuUrl.trim(),
     other_links: form.otherLinks.trim(),
-    content_categories: form.contentCategories.trim(),
-    content_formats: form.contentFormats.trim(),
-    audience_regions: form.audienceRegions.trim(),
-    audience_age_groups: form.audienceAgeGroups.trim(),
-    has_brand_collabs: form.hasBrandCollabs.trim(),
-    has_conversion_campaigns: form.hasConversionCampaigns.trim(),
+    content_categories: form.contentCategories.join(', '),
+    content_formats: form.contentFormats.join(', '),
+    audience_regions: '',
+    audience_age_groups: '',
+    has_brand_collabs: form.recentBrandCollabs.filter(Boolean).join('\n'),
+    has_conversion_campaigns: form.recentConversionCampaigns.filter(Boolean).join('\n'),
     usual_reel_rate: form.usualReelRate.trim(),
-    available_regions: form.availableRegions.trim(),
+    usual_post_rate: form.usualPostRate.trim(),
+    usual_story_rate: form.usualStoryRate.trim(),
+    available_regions: form.availableRegions.join(', '),
     turnaround_days: form.turnaroundDays.trim(),
-    top_content_links: form.topContentLinks.trim(),
-    analytics_notes: form.analyticsNotes.trim(),
-    analytics_drive_links: form.analyticsDriveLinks.trim(),
+    top_content_links: form.topContentLinks.filter(Boolean).join('\n'),
+    analytics_notes: '',
+    analytics_drive_links: form.audienceInsightLinks.filter(Boolean).join('\n'),
     selected_plan: form.selectedPlan.trim(),
     ai_analysis: preview
       ? {

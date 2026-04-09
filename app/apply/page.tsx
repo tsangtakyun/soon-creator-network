@@ -4,7 +4,17 @@ import { useMemo, useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { buildCreatorAiPreview, defaultCreatorApplyForm, getCreatorPlans } from '@/lib/creator-network'
+import {
+  buildCreatorAiPreview,
+  creatorAvailableRegionOptions,
+  creatorContentCategoryOptions,
+  creatorContentFormatOptions,
+  creatorCountryOptions,
+  creatorLanguageOptions,
+  creatorRateRangeOptions,
+  defaultCreatorApplyForm,
+  getCreatorPlans,
+} from '@/lib/creator-network'
 
 export default function ApplyPage() {
   const router = useRouter()
@@ -15,8 +25,34 @@ export default function ApplyPage() {
   const preview = useMemo(() => buildCreatorAiPreview(form), [form])
   const plans = useMemo(() => getCreatorPlans(), [])
 
-  function updateField(field: keyof typeof defaultCreatorApplyForm, value: string) {
+  function updateField(field: keyof typeof defaultCreatorApplyForm, value: string | string[]) {
     setForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  function toggleMultiValue(
+    field: 'languages' | 'contentCategories' | 'contentFormats' | 'availableRegions',
+    value: string
+  ) {
+    setForm((prev) => {
+      const current = prev[field]
+      return {
+        ...prev,
+        [field]: current.includes(value)
+          ? current.filter((item) => item !== value)
+          : [...current, value],
+      }
+    })
+  }
+
+  function updateListField(
+    field: 'audienceInsightLinks' | 'recentBrandCollabs' | 'recentConversionCampaigns' | 'topContentLinks',
+    index: number,
+    value: string
+  ) {
+    setForm((prev) => ({
+      ...prev,
+      [field]: prev[field].map((item, itemIndex) => (itemIndex === index ? value : item)),
+    }))
   }
 
   function handleSubmit() {
@@ -69,14 +105,45 @@ export default function ApplyPage() {
                   ['contactName', '聯絡人名稱'],
                   ['email', 'Email'],
                   ['whatsapp', 'WhatsApp'],
-                  ['location', '所在地'],
-                  ['languages', '語言'],
                 ].map(([key, label]) => (
                   <label key={key} style={{ display: 'grid', gap: '8px' }}>
                     <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
-                    <input value={form[key as keyof typeof form]} onChange={(e) => updateField(key as keyof typeof form, e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }} />
+                    <input value={form[key as keyof typeof form] as string} onChange={(e) => updateField(key as keyof typeof form, e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }} />
                   </label>
                 ))}
+                <label style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>國家 / 地區</div>
+                  <select value={form.country} onChange={(e) => updateField('country', e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}>
+                    {creatorCountryOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                </label>
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>語言（可多揀）</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {creatorLanguageOptions.map((option) => {
+                      const selected = form.languages.includes(option)
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleMultiValue('languages', option)}
+                          style={{
+                            borderRadius: '999px',
+                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
+                            background: selected ? '#1a1a18' : '#fff',
+                            color: selected ? '#f5efe5' : '#1a1a18',
+                            padding: '10px 12px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {option}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -103,25 +170,175 @@ export default function ApplyPage() {
             <section style={{ padding: '24px', borderRadius: '24px', background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(26,26,24,0.10)' }}>
               <div style={{ fontSize: '12px', letterSpacing: '0.16em', color: '#8b7c69', marginBottom: '8px' }}>CONTENT + COMMERCIAL INFO</div>
               <div style={{ display: 'grid', gap: '12px' }}>
-                {[
-                  ['contentCategories', '內容類別（food / travel / lifestyle ...）'],
-                  ['contentFormats', '內容形式（reel / vlog / talking head ...）'],
-                  ['audienceRegions', 'Audience 地區'],
-                  ['audienceAgeGroups', 'Audience 年齡層'],
-                  ['hasBrandCollabs', '有冇接過品牌合作？'],
-                  ['hasConversionCampaigns', '有冇做過帶轉化 / sales campaign？'],
-                  ['usualReelRate', '平時一條 Reel 收費 range'],
-                  ['availableRegions', '可接拍攝地區'],
-                  ['turnaroundDays', '一般交片時間'],
-                  ['topContentLinks', '最代表你 style 嘅 3 條 content links'],
-                  ['analyticsNotes', '28 日數據摘要 / 備註'],
-                  ['analyticsDriveLinks', '28 日數據 cap 圖 / media kit Google Drive links'],
-                ].map(([key, label]) => (
-                  <label key={key} style={{ display: 'grid', gap: '8px' }}>
-                    <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
-                    <textarea value={form[key as keyof typeof form]} onChange={(e) => updateField(key as keyof typeof form, e.target.value)} style={{ width: '100%', minHeight: '86px', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.7 }} />
-                  </label>
-                ))}
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>你曾經拍過嘅內容類別（可多揀）</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {creatorContentCategoryOptions.map((option) => {
+                      const selected = form.contentCategories.includes(option)
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleMultiValue('contentCategories', option)}
+                          style={{
+                            borderRadius: '999px',
+                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
+                            background: selected ? '#1a1a18' : '#fff',
+                            color: selected ? '#f5efe5' : '#1a1a18',
+                            padding: '10px 12px',
+                            cursor: 'pointer',
+                            textTransform: 'capitalize',
+                          }}
+                        >
+                          {option}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>內容形式（可多揀）</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {creatorContentFormatOptions.map((option) => {
+                      const selected = form.contentFormats.includes(option)
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleMultiValue('contentFormats', option)}
+                          style={{
+                            borderRadius: '999px',
+                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
+                            background: selected ? '#1a1a18' : '#fff',
+                            color: selected ? '#f5efe5' : '#1a1a18',
+                            padding: '10px 12px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {option}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>Audience / 28 日數據摘要 cap 圖 links</div>
+                  <div style={{ display: 'grid', gap: '10px' }}>
+                    {form.audienceInsightLinks.map((value, index) => (
+                      <input
+                        key={`audience-link-${index}`}
+                        value={value}
+                        onChange={(e) => updateListField('audienceInsightLinks', index, e.target.value)}
+                        placeholder={`Cap 圖 / Google Drive Link ${index + 1}`}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>曾經嘅品牌合作（最近 5 個）</div>
+                  <div style={{ display: 'grid', gap: '10px' }}>
+                    {form.recentBrandCollabs.map((value, index) => (
+                      <input
+                        key={`brand-collab-${index}`}
+                        value={value}
+                        onChange={(e) => updateListField('recentBrandCollabs', index, e.target.value)}
+                        placeholder={`品牌合作 ${index + 1}`}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>有冇做過帶轉化 / sales campaign？（最近 5 個）</div>
+                  <div style={{ display: 'grid', gap: '10px' }}>
+                    {form.recentConversionCampaigns.map((value, index) => (
+                      <input
+                        key={`conversion-campaign-${index}`}
+                        value={value}
+                        onChange={(e) => updateListField('recentConversionCampaigns', index, e.target.value)}
+                        placeholder={`Sales campaign ${index + 1}`}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                  {[
+                    ['usualReelRate', '一條 Reel 收費'],
+                    ['usualPostRate', '一個 Post 收費'],
+                    ['usualStoryRate', '一個 Story 收費'],
+                  ].map(([key, label]) => (
+                    <label key={key} style={{ display: 'grid', gap: '8px' }}>
+                      <div style={{ fontSize: '14px', color: '#5b5348' }}>{label}</div>
+                      <select
+                        value={form[key as 'usualReelRate' | 'usualPostRate' | 'usualStoryRate']}
+                        onChange={(e) => updateField(key as keyof typeof defaultCreatorApplyForm, e.target.value)}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                      >
+                        <option value="">請選擇</option>
+                        {creatorRateRangeOptions.map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
+                      </select>
+                    </label>
+                  ))}
+                </div>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>可接拍攝地區（可多揀）</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {creatorAvailableRegionOptions.map((option) => {
+                      const selected = form.availableRegions.includes(option)
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleMultiValue('availableRegions', option)}
+                          style={{
+                            borderRadius: '999px',
+                            border: selected ? '1px solid #1a1a18' : '1px solid rgba(26,26,24,0.12)',
+                            background: selected ? '#1a1a18' : '#fff',
+                            color: selected ? '#f5efe5' : '#1a1a18',
+                            padding: '10px 12px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {option}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <label style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>一般交片時間</div>
+                  <input
+                    value={form.turnaroundDays}
+                    onChange={(e) => updateField('turnaroundDays', e.target.value)}
+                    style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                  />
+                </label>
+
+                <div style={{ display: 'grid', gap: '8px' }}>
+                  <div style={{ fontSize: '14px', color: '#5b5348' }}>最代表你 style 嘅 3 條 content links</div>
+                  <div style={{ display: 'grid', gap: '10px' }}>
+                    {form.topContentLinks.map((value, index) => (
+                      <input
+                        key={`top-content-link-${index}`}
+                        value={value}
+                        onChange={(e) => updateListField('topContentLinks', index, e.target.value)}
+                        placeholder={`Content link ${index + 1}`}
+                        style={{ width: '100%', padding: '12px 14px', borderRadius: '14px', border: '1px solid rgba(26,26,24,0.14)', background: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
 

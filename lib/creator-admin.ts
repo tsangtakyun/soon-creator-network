@@ -22,6 +22,8 @@ export type CreatorApplicationRecord = {
   has_brand_collabs: string
   has_conversion_campaigns: string
   usual_reel_rate: string
+  usual_post_rate: string
+  usual_story_rate: string
   available_regions: string
   turnaround_days: string
   top_content_links: string

@@ -22,6 +22,8 @@ create table if not exists public.creator_applications (
   has_brand_collabs text not null default '',
   has_conversion_campaigns text not null default '',
   usual_reel_rate text not null default '',
+  usual_post_rate text not null default '',
+  usual_story_rate text not null default '',
   available_regions text not null default '',
   turnaround_days text not null default '',
   top_content_links text not null default '',

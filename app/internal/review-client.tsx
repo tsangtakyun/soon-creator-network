@@ -131,7 +131,7 @@ export default function InternalReviewClientPage({ initialApplications }: Review
                       ['Primary Platform', application.primary_platform],
                       ['Content Categories', application.content_categories],
                       ['Selected Plan', application.selected_plan],
-                      ['Usual Reel Rate', application.usual_reel_rate],
+                      ['Reel / Post / Story', `${application.usual_reel_rate || '未填'} / ${application.usual_post_rate || '未填'} / ${application.usual_story_rate || '未填'}`],
                     ].map(([label, value]) => (
                       <div key={label} style={{ padding: '14px 16px', borderRadius: '16px', background: '#fbf8f1', border: '1px solid rgba(26,26,24,0.08)' }}>
                         <div style={{ fontSize: '12px', color: '#8b7c69', marginBottom: '6px' }}>{label}</div>
