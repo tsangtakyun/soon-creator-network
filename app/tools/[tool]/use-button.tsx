@@ -52,12 +52,28 @@ export default function CreatorToolUseButton({
         type="button"
         onClick={handleUseTool}
         disabled={isPending}
-        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '18px', background: '#f5efe5', color: '#1a1a18', padding: '16px 18px', textDecoration: 'none', border: '1px solid rgba(245,239,229,0.35)', cursor: 'pointer', fontSize: '16px', fontWeight: 600, width: '100%' }}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          minHeight: '56px',
+          borderRadius: '999px',
+          background: 'linear-gradient(135deg, #1c72ff, #3d8bff)',
+          color: '#ffffff',
+          padding: '0 18px',
+          textDecoration: 'none',
+          border: '1px solid rgba(142,180,255,0.24)',
+          cursor: 'pointer',
+          fontSize: '15px',
+          boxShadow: '0 0 0 1px rgba(142,180,255,0.16), 0 0 28px rgba(27,114,255,0.32)',
+          opacity: isPending ? 0.72 : 1,
+        }}
       >
-        {isPending ? '扣 credit 中...' : `確認使用並扣 ${creditCost} credits`}
+        {isPending ? '正在啟動工具...' : `確認使用並扣除 ${creditCost} 點`}
       </button>
       {error ? (
-        <div style={{ padding: '12px 14px', borderRadius: '14px', background: 'rgba(255,255,255,0.08)', color: '#f5d7cf', lineHeight: 1.7 }}>
+        <div style={{ padding: '12px 14px', borderRadius: '14px', background: 'rgba(181,69,69,0.16)', border: '1px solid rgba(255,255,255,0.06)', color: '#ffe7e3', lineHeight: 1.7 }}>
           {error}
         </div>
       ) : null}
