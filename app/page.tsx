@@ -297,10 +297,12 @@ export default function HomePage() {
           min-height: 58px;
           padding: 0 24px;
           border-radius: 999px;
-          text-decoration: none;
+          text-decoration: none !important;
           font-size: 0.98rem;
           font-weight: 400;
           letter-spacing: -0.03em;
+          line-height: 1;
+          cursor: pointer;
           transition:
             transform 180ms ease,
             box-shadow 180ms ease,
@@ -363,7 +365,13 @@ export default function HomePage() {
         .plan-cta {
           width: 100%;
           min-height: 56px;
-          margin-top: 6px;
+          margin-top: auto;
+          padding: 0 22px;
+          font-size: 0.96rem;
+        }
+
+        .plan-cta--secondary {
+          color: #f5f8ff;
         }
 
         .primary-cta:hover,
@@ -524,6 +532,8 @@ export default function HomePage() {
         .plan-card {
           border-radius: 30px;
           padding: 28px;
+          display: flex;
+          flex-direction: column;
         }
 
         .plan-card--recommended {
