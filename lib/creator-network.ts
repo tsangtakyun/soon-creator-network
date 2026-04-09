@@ -353,9 +353,9 @@ export function buildCreatorToolAccess(planId: string, paymentStatus: string) {
 
 export function buildCreatorValueProps() {
   return [
-    '所有 job 經 SOON system 跑，客戶先付款，你唔使驚拖數。',
-    'SOON internal system 持續有題材庫、AI planning 同 AI gen tools，俾你按需要增值。',
-    '唔使簽死約，自己決定接唔接合作、點樣發展自己嘅 creator 路。',
+    '所有合作皆經 SOON 系統處理，客戶完成付款後才進入正式製作流程，降低拖欠款項風險。',
+    'SOON 內部系統持續提供題材研究、AI 規劃與生成工具，可按實際需要逐步啟用。',
+    '無須受制於綁定式合約，你可自行決定是否合作，以及如何發展個人的創作方向。',
   ]
 }
 

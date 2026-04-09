@@ -50,11 +50,11 @@ export default function HomePage() {
             </p>
 
             <div className="hero-actions">
-              <Link href="/apply" className="primary-cta">
+              <Link href="/apply" className="primary-cta primary-cta--hero">
                 立即加入
                 <span aria-hidden="true">→</span>
               </Link>
-              <Link href="/creator-workspace" className="secondary-cta">
+              <Link href="/creator-workspace" className="secondary-cta secondary-cta--hero">
                 前往工作台
               </Link>
             </div>
@@ -78,7 +78,7 @@ export default function HomePage() {
           <div className="why-shell" id="why-soon">
             <div className="section-heading section-heading--center">
               <div className="eyebrow">為何選擇 SOON</div>
-              <h2>不只是創作者名單，而是一個可持續擴充的創作工作台。</h2>
+              <h2>可持續擴充的創作工作台</h2>
             </div>
 
             <div className="panel-list">
@@ -95,7 +95,7 @@ export default function HomePage() {
         <section className="section-grid">
           <div className="section-heading">
             <div className="eyebrow">運作方式</div>
-            <h2>從合作機會到內容工作流程，全部以清晰路徑串連。</h2>
+            <h2>從合作到製作，一目了然。</h2>
           </div>
 
           <div className="steps-grid">
@@ -122,7 +122,7 @@ export default function HomePage() {
         <section className="plans-shell" id="plans">
           <div className="section-heading section-heading--wide">
             <div className="eyebrow">創作者方案</div>
-            <h2>先加入網絡，再按你是否需要加速創作流程，選擇合適方案。</h2>
+            <h2>先加入網絡，再選擇適合你的方案。</h2>
           </div>
 
           <div className="plans-grid">
@@ -133,7 +133,7 @@ export default function HomePage() {
                     <div className="plan-name">{plan.name}</div>
                     <div className="plan-subtitle">{plan.subtitle}</div>
                   </div>
-                  {plan.recommended ? <span className="plan-badge">推薦方案</span> : null}
+                  {plan.recommended ? <span className="plan-badge">建議選擇</span> : null}
                 </div>
 
                 <div className="plan-price">{plan.monthlyLabel}</div>
@@ -148,7 +148,10 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <Link href="/apply" className={plan.recommended ? 'plan-cta plan-cta--primary' : 'plan-cta'}>
+                <Link
+                  href="/apply"
+                  className={plan.recommended ? 'plan-cta plan-cta--primary' : 'plan-cta plan-cta--secondary'}
+                >
                   {plan.id === 'creator-core' ? '先免費加入' : '選擇此方案'}
                 </Link>
               </section>
@@ -301,7 +304,8 @@ export default function HomePage() {
           transition:
             transform 180ms ease,
             box-shadow 180ms ease,
-            border-color 180ms ease;
+            border-color 180ms ease,
+            background 180ms ease;
         }
 
         .primary-cta {
@@ -319,6 +323,22 @@ export default function HomePage() {
           background: rgba(255, 255, 255, 0.03);
         }
 
+        .primary-cta--hero,
+        .secondary-cta--hero {
+          min-width: 210px;
+          min-height: 60px;
+          padding: 0 30px;
+        }
+
+        .secondary-cta--hero,
+        .plan-cta--secondary {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.16);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+            0 14px 34px rgba(0, 0, 0, 0.2);
+        }
+
         .plan-cta--primary {
           color: #ffffff;
           background: linear-gradient(135deg, #1c72ff, #3d8bff);
@@ -328,10 +348,17 @@ export default function HomePage() {
             0 0 32px rgba(27, 114, 255, 0.35);
         }
 
+        .plan-cta {
+          width: 100%;
+          min-height: 56px;
+          margin-top: 6px;
+        }
+
         .primary-cta:hover,
         .secondary-cta:hover,
         .plan-cta:hover {
           transform: translateY(-1px);
+          border-color: rgba(151, 186, 255, 0.3);
         }
 
         .hero-foot {
