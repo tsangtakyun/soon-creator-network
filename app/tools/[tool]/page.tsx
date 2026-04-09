@@ -72,7 +72,7 @@ export default async function CreatorToolPage({
             </div>
           ) : null}
           {access?.unlocked ? <CreatorToolUseButton toolSlug={tool} creditCost={access.creditCost} /> : null}
-          <Link href="/creator-workspace" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: access?.unlocked ? '#f5efe5' : '#1a1a18', color: access?.unlocked ? '#1a1a18' : '#f5efe5', padding: '12px 16px', textDecoration: 'none' }}>
+          <Link href="/creator-workspace" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: 'rgba(255,255,255,0.08)', color: '#f5efe5', padding: '12px 16px', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.14)', width: 'fit-content' }}>
             返回 Creator Dashboard
           </Link>
         </section>

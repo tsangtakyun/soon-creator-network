@@ -52,7 +52,7 @@ export default function CreatorToolUseButton({
         type="button"
         onClick={handleUseTool}
         disabled={isPending}
-        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: '#f5efe5', color: '#1a1a18', padding: '12px 16px', textDecoration: 'none', border: 'none', cursor: 'pointer' }}
+        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '18px', background: '#f5efe5', color: '#1a1a18', padding: '16px 18px', textDecoration: 'none', border: '1px solid rgba(245,239,229,0.35)', cursor: 'pointer', fontSize: '16px', fontWeight: 600, width: '100%' }}
       >
         {isPending ? '扣 credit 中...' : `確認使用並扣 ${creditCost} credits`}
       </button>
