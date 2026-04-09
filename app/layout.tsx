@@ -11,8 +11,8 @@ function NavBar() {
     <>
       <nav className="site-nav">
         <Link href="/" className="brand-mark">
-          <span className="brand-dot" />
-          <span>SOON Creator</span>
+          <img src="/soon-logo-white.png" alt="SOON" className="brand-logo" />
+          <span>Creator</span>
         </Link>
 
         <div className="nav-links">
@@ -23,8 +23,8 @@ function NavBar() {
         </div>
 
         <div className="nav-actions">
-          <Link href="/login" className="nav-secondary">
-            Google Login
+          <Link href="/creator-workspace" className="nav-secondary">
+            Go to Dashboard
           </Link>
           <Link href="/apply" className="nav-primary">
             Join Network
@@ -57,21 +57,20 @@ function NavBar() {
         .brand-mark {
           display: inline-flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
           color: #f6f7fb;
           text-decoration: none;
-          font-size: 1rem;
-          font-weight: 600;
-          letter-spacing: -0.03em;
+          font-size: 0.96rem;
+          font-weight: 500;
+          letter-spacing: -0.04em;
           white-space: nowrap;
         }
 
-        .brand-dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #70a5ff, #2458ff);
-          box-shadow: 0 0 22px rgba(54, 111, 255, 0.9);
+        .brand-logo {
+          width: 48px;
+          height: auto;
+          display: block;
+          object-fit: contain;
         }
 
         .nav-links {
@@ -86,7 +85,9 @@ function NavBar() {
         .nav-links a {
           color: rgba(233, 236, 245, 0.8);
           text-decoration: none;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
+          font-weight: 400;
+          letter-spacing: -0.03em;
           transition: color 160ms ease;
         }
 
@@ -107,7 +108,9 @@ function NavBar() {
           text-decoration: none;
           border-radius: 999px;
           padding: 11px 18px;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
+          font-weight: 400;
+          letter-spacing: -0.03em;
           white-space: nowrap;
         }
 
@@ -159,7 +162,7 @@ function NavBar() {
           }
 
           .nav-links a {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
           }
         }
       ` }} />

@@ -57,8 +57,8 @@ export default function HomePage() {
                   立即加入 Network
                   <span aria-hidden="true">→</span>
                 </Link>
-                <Link href="/login?next=/creator-workspace" className="secondary-cta">
-                  Google Login 入 Workspace
+                <Link href="/creator-workspace" className="secondary-cta">
+                  Go to Dashboard
                 </Link>
               </div>
 
@@ -247,21 +247,24 @@ export default function HomePage() {
           margin: 0;
           max-width: 10ch;
           font-size: clamp(4rem, 9vw, 7rem);
-          line-height: 0.92;
-          letter-spacing: -0.07em;
-          font-weight: 600;
+          line-height: 0.9;
+          letter-spacing: -0.085em;
+          font-weight: 300;
           color: #f8faff;
         }
 
         h1 span {
           color: rgba(240, 244, 255, 0.95);
+          font-weight: 400;
         }
 
         .hero-text {
           max-width: 760px;
           margin: 26px 0 0;
           color: rgba(210, 217, 234, 0.78);
-          font-size: 1.15rem;
+          font-size: 1.08rem;
+          font-weight: 350;
+          letter-spacing: -0.02em;
           line-height: 1.8;
         }
 
@@ -283,7 +286,9 @@ export default function HomePage() {
           padding: 0 24px;
           border-radius: 999px;
           text-decoration: none;
-          font-size: 1rem;
+          font-size: 0.98rem;
+          font-weight: 400;
+          letter-spacing: -0.03em;
           transition:
             transform 180ms ease,
             box-shadow 180ms ease,
@@ -338,14 +343,16 @@ export default function HomePage() {
           display: block;
           margin-bottom: 8px;
           color: #f6f8ff;
-          font-size: 0.96rem;
-          font-weight: 600;
+          font-size: 0.92rem;
+          font-weight: 500;
+          letter-spacing: -0.02em;
         }
 
         .hero-proof__text {
           color: rgba(206, 214, 232, 0.72);
           line-height: 1.7;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
+          font-weight: 350;
         }
 
         .hero-panel {
@@ -366,6 +373,7 @@ export default function HomePage() {
           line-height: 1.1;
           color: #f8faff;
           letter-spacing: -0.05em;
+          font-weight: 400;
         }
 
         .panel-list {
@@ -425,6 +433,7 @@ export default function HomePage() {
           line-height: 1.02;
           letter-spacing: -0.06em;
           color: #f8faff;
+          font-weight: 350;
         }
 
         .steps-grid,
@@ -465,6 +474,7 @@ export default function HomePage() {
           font-size: 1.6rem;
           line-height: 1.1;
           letter-spacing: -0.05em;
+          font-weight: 400;
         }
 
         .plans-shell {
@@ -496,6 +506,7 @@ export default function HomePage() {
           color: #f7f9ff;
           font-size: 1.7rem;
           letter-spacing: -0.05em;
+          font-weight: 400;
         }
 
         .plan-subtitle {
@@ -520,6 +531,7 @@ export default function HomePage() {
           font-size: 2.4rem;
           line-height: 1;
           letter-spacing: -0.06em;
+          font-weight: 350;
         }
 
         .plan-description {
